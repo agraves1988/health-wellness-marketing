@@ -289,7 +289,7 @@
   .universal-flip .flip-card-inner { height: 100%; }
 
   .universal-flip .flip-front {
-    background: var(--cream);
+    background: var(--white);
     border: 1px solid var(--blush);
     border-radius: 6px;
     transition: border-color .2s, background .2s;
@@ -309,33 +309,39 @@
   /* ── CTA CARDS ── */
   .cta-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+    background: var(--blush);
+    border: 1px solid var(--blush);
+    border-radius: 8px;
+    overflow: hidden;
   }
 
   .cta-flip {
     perspective: 1200px;
     cursor: pointer;
-    height: 240px;
+    height: 280px;
   }
   .cta-flip .flip-card-inner { height: 100%; }
 
   .cta-flip .flip-front {
-    background: var(--navy);
-    border-radius: 6px;
+    background: var(--white);
     position: relative; overflow: hidden;
-    transition: transform .2s;
+    border-radius: 0;
+    transition: background .2s;
   }
-  .cta-flip:hover .flip-front { transform: translateY(-2px); }
-  .cta-flip .flip-front::after {
-    content: ''; position: absolute;
-    bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold);
+  .cta-flip:hover .flip-front { background: #fdfaf8; }
+  .cta-flip .flip-front::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%; background: var(--gold);
+    opacity: 0; transition: opacity .2s;
   }
-  .cta-flip .flip-front::before { display: none; }
+  .cta-flip:hover .flip-front::before { opacity: 1; }
+  .cta-flip .flip-front::after { display: none; }
   .cta-flip .flip-back {
-    border-radius: 6px;
-    background: #0a2d5e;
-    border: 1px solid rgba(185,151,91,.3);
+    background: var(--navy);
+    border-radius: 0;
   }
 
   .cta-phrase {
@@ -444,6 +450,40 @@
   .section.hidden {
     display: none;
   }
+
+
+  /* CTA override */
+  .cta-flip .flip-card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .55s cubic-bezier(.4,0,.2,1);
+  }
+  .cta-flip.flipped .flip-card-inner { transform: rotateY(180deg); }
+  .cta-flip .flip-front {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    padding: 24px 26px;
+    background: var(--white);
+    display: flex; flex-direction: column; justify-content: space-between;
+    transition: background .2s;
+  }
+  .cta-flip:hover .flip-front { background: #fdfaf8; }
+  .cta-flip .flip-front::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%; background: var(--gold);
+    opacity: 0; transition: opacity .2s;
+  }
+  .cta-flip:hover .flip-front::before { opacity: 1; }
+  .cta-flip .flip-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    padding: 24px 26px;
+    background: var(--navy);
+    transform: rotateY(180deg);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .cta-phrase { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; color: var(--navy); margin-bottom: 8px; line-height: 1.25; }
+  .cta-why { font-size: 13px; font-weight: 400; color: var(--mauve); line-height: 1.55; }
 
 </style>
 </head>
@@ -813,7 +853,7 @@
       <div class="section-num">03</div>
       <div>
         <h2 class="section-title">Hormone Replacement Therapy</h2>
-        <p class="section-sub">Balance &amp; quality of life framing</p>
+        <p class="section-sub">Balance &amp; quality of life framing - LegitScript certification required for Rx ads</p>
       </div>
     </div>
     <div class="term-grid">
@@ -1094,9 +1134,9 @@
     </div>
     <div class="cta-grid">
 
-      <div class="cta-flip flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="cta-flip" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-front"><div class="cta-phrase">"Book your free consultation"</div><div class="cta-why">Top-performing compliant CTA for all services</div></div>
+          <div class="flip-front"><div><div class="cta-phrase">"Book your free consultation"</div><div class="cta-why">Top-performing compliant CTA for all services</div></div><div class="flip-hint">See captions</div></div>
           <div class="flip-back">
             <div class="flip-back-term">"Book your free consultation"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
@@ -1108,9 +1148,9 @@
         </div>
       </div>
 
-      <div class="cta-flip flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="cta-flip" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-front"><div class="cta-phrase">"Learn more about your options"</div><div class="cta-why">Educational, low-friction, policy-safe</div></div>
+          <div class="flip-front"><div><div class="cta-phrase">"Learn more about your options"</div><div class="cta-why">Educational, low-friction, policy-safe</div></div><div class="flip-hint">See captions</div></div>
           <div class="flip-back">
             <div class="flip-back-term">"Learn more about your options"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
@@ -1122,9 +1162,9 @@
         </div>
       </div>
 
-      <div class="cta-flip flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="cta-flip" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-front"><div class="cta-phrase">"Talk to a provider today"</div><div class="cta-why">Drives consults without conversion events</div></div>
+          <div class="flip-front"><div><div class="cta-phrase">"Talk to a provider today"</div><div class="cta-why">Drives consults without conversion events</div></div><div class="flip-hint">See captions</div></div>
           <div class="flip-back">
             <div class="flip-back-term">"Talk to a provider today"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
@@ -1136,9 +1176,9 @@
         </div>
       </div>
 
-      <div class="cta-flip flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="cta-flip" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-front"><div class="cta-phrase">"Start your wellness journey"</div><div class="cta-why">Aspirational lead-gen language</div></div>
+          <div class="flip-front"><div><div class="cta-phrase">"Start your wellness journey"</div><div class="cta-why">Aspirational lead-gen language</div></div><div class="flip-hint">See captions</div></div>
           <div class="flip-back">
             <div class="flip-back-term">"Start your wellness journey"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
@@ -1150,9 +1190,9 @@
         </div>
       </div>
 
-      <div class="cta-flip flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="cta-flip" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-front"><div class="cta-phrase">"See if this is right for you"</div><div class="cta-why">Low-pressure, self-qualifying language</div></div>
+          <div class="flip-front"><div><div class="cta-phrase">"See if this is right for you"</div><div class="cta-why">Low-pressure, self-qualifying language</div></div><div class="flip-hint">See captions</div></div>
           <div class="flip-back">
             <div class="flip-back-term">"See if this is right for you"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
@@ -1164,9 +1204,9 @@
         </div>
       </div>
 
-      <div class="cta-flip flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="cta-flip" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
-          <div class="flip-front"><div class="cta-phrase">"Request your personalized plan"</div><div class="cta-why">Emphasizes customization, drives form fills</div></div>
+          <div class="flip-front"><div><div class="cta-phrase">"Request your personalized plan"</div><div class="cta-why">Emphasizes customization, drives form fills</div></div><div class="flip-hint">See captions</div></div>
           <div class="flip-back">
             <div class="flip-back-term">"Request your personalized plan"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
