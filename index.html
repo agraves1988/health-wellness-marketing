@@ -156,6 +156,22 @@
   .alert-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
   .alert-body { font-size: 13px; font-weight: 300; color: rgba(205,181,167,.85); line-height: 1.65; max-width: 780px; }
 
+  /* ── GLP-1 ENFORCEMENT BANNER ── */
+  .glp-alert-wrap { background: #0a1628; padding: 0 72px; border-top: 1px solid rgba(185,151,91,.15); }
+  .glp-alert-inner {
+    display: flex; align-items: flex-start; gap: 24px; padding: 28px 0;
+  }
+  .glp-alert-icon {
+    width: 36px; height: 36px; border: 1px solid rgba(185,151,91,.5);
+    border-radius: 4px; display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0; margin-top: 2px;
+    background: rgba(185,151,91,.08);
+  }
+  .glp-alert-icon svg { width: 14px; height: 14px; }
+  .glp-alert-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #e8b86d; margin-bottom: 6px; }
+  .glp-alert-body { font-size: 13px; font-weight: 300; color: rgba(205,181,167,.8); line-height: 1.65; max-width: 780px; }
+  .glp-alert-body strong { color: var(--tan); font-weight: 500; }
+
   /* ── CONTENT ── */
   .content { max-width: 1100px; margin: 0 auto; padding: 80px 72px 100px; }
   .section { margin-bottom: 80px; }
@@ -364,6 +380,47 @@
   .rule-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
   .rule-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; font-style: italic; color: var(--tan); line-height: 1.6; }
 
+  /* ── GLP-1 AVOID BOX ── */
+  .avoid-box {
+    background: rgba(4,30,66,.06);
+    border: 1px solid rgba(185,151,91,.2);
+    border-radius: 8px;
+    padding: 28px 32px;
+    margin-top: 32px;
+  }
+  .avoid-box-label {
+    font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .avoid-box-label::before {
+    content: '';
+    width: 20px; height: 1px; background: var(--gold);
+  }
+  .avoid-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .avoid-pill {
+    background: var(--white);
+    border: 1px solid var(--blush);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--mauve);
+    display: flex; align-items: flex-start; gap: 8px;
+    line-height: 1.4;
+  }
+  .avoid-pill::before {
+    content: '✕';
+    font-size: 9px;
+    color: rgba(185,151,91,.6);
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
   /* ── DIVIDER / FOOTER ── */
   .gold-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, var(--gold) 80%, transparent 100%); opacity: .35; }
 
@@ -393,6 +450,7 @@
     .hero-left { padding: 60px 28px; }
     .content { padding: 48px 28px 64px; }
     .alert-wrap { padding: 0 28px; }
+    .glp-alert-wrap { padding: 0 28px; }
     footer { padding: 40px 28px; }
     .rule-box { grid-template-columns: 1fr; gap: 20px; padding: 32px 28px; }
   }
@@ -451,7 +509,6 @@
     display: none;
   }
 
-
   /* CTA override */
   .cta-flip .flip-card-inner {
     position: relative; width: 100%; height: 100%;
@@ -497,6 +554,7 @@
     <p class="hero-sub">The compliant language your team can use on Facebook &amp; Instagram - organized by service, built for partner practices.</p>
     <div class="hero-services">
       <span class="hero-service-pill">Peptides</span>
+      <span class="hero-service-pill">GLP-1</span>
       <span class="hero-service-pill">IV Therapy</span>
       <span class="hero-service-pill">Hormone Replacement</span>
       <span class="hero-service-pill">Internal Use</span>
@@ -514,8 +572,8 @@
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num">18+</div><div class="hero-stat-label">Age gate required</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">Service categories</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">38</div><div class="hero-stat-label">Approved phrases</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label">Service categories</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">46</div><div class="hero-stat-label">Approved phrases</div></div>
     </div>
   </div>
 </section>
@@ -532,6 +590,18 @@
   </div>
 </div>
 
+<div class="glp-alert-wrap">
+  <div class="glp-alert-inner">
+    <div class="glp-alert-icon">
+      <svg viewBox="0 0 14 14" fill="none"><rect x="1.5" y="1.5" width="11" height="11" rx="2" stroke="#B9975B" stroke-width="1.2"/><path d="M7 4.5V7.5" stroke="#B9975B" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="9.5" r=".6" fill="#B9975B"/></svg>
+    </div>
+    <div>
+      <div class="glp-alert-label">GLP-1 Enforcement Alert · March 2026</div>
+      <p class="glp-alert-body">FDA issued <strong>30 warning letters</strong> to telehealth companies in March 2026 for misleading compounded GLP-1 marketing. Key violations: implying sameness with brand-name drugs (Ozempic®, Wegovy®, Mounjaro®) and obscuring the compounding pharmacy's identity. <strong>Never use brand names for compounded products.</strong> All GLP-1 ads must use Lead or Awareness objectives — no conversion events.</p>
+    </div>
+  </div>
+</div>
+
 <div class="gold-divider"></div>
 
 <main class="content">
@@ -539,6 +609,7 @@
   <!-- FILTER BAR -->
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="glp1">GLP-1</button>
     <button class="filter-btn" data-filter="peptides">Peptides</button>
     <button class="filter-btn" data-filter="iv">IV Therapy</button>
     <button class="filter-btn" data-filter="hrt">HRT</button>
@@ -547,10 +618,177 @@
   </div>
 
 
-  <!-- 01 PEPTIDES -->
-  <div class="section" data-service="peptides">
+  <!-- 01 GLP-1 -->
+  <div class="section" data-service="glp1">
     <div class="section-header">
       <div class="section-num">01</div>
+      <div>
+        <h2 class="section-title">GLP-1 Weight Management</h2>
+        <p class="section-sub">Program &amp; care framing only — never name brand drugs for compounded products</p>
+      </div>
+    </div>
+    <div class="term-grid">
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div><div class="term-phrase">"Medically supervised weight management"</div><div class="term-why">Centers the program and clinical oversight, not the drug</div></div>
+            <div class="flip-hint">See captions</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-term">"Medically supervised weight management"</div><div class="flip-back-sublabel">Caption ideas</div>
+            <div class="caption-list">
+              <div class="caption-item">Real results start with real support. Our medically supervised weight management programs are built around your goals — with a clinical team beside you every step.</div>
+              <div class="caption-item">Weight management that's guided, not guessed. Talk to our providers and see if our medically supervised program is right for you.</div>
+            </div>
+            <div class="flip-back-close">Back</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div><div class="term-phrase">"Prescription weight loss therapy"</div><div class="term-why">Accurately signals Rx without naming a specific drug</div></div>
+            <div class="flip-hint">See captions</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-term">"Prescription weight loss therapy"</div><div class="flip-back-sublabel">Caption ideas</div>
+            <div class="caption-list">
+              <div class="caption-item">Not all weight loss programs are created equal. Our prescription therapy is provider-guided, personalized, and clinically supported. Book a consultation to learn more.</div>
+              <div class="caption-item">Prescription weight loss therapy tailored to you. Our clinical team walks with you from the first consult through every milestone. See if you're a candidate.</div>
+            </div>
+            <div class="flip-back-close">Back</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div><div class="term-phrase">"Metabolic wellness program"</div><div class="term-why">Wellness framing avoids direct weight-loss claim red flags</div></div>
+            <div class="flip-hint">See captions</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-term">"Metabolic wellness program"</div><div class="flip-back-sublabel">Caption ideas</div>
+            <div class="caption-list">
+              <div class="caption-item">Your metabolism matters. Our metabolic wellness programs are designed by providers who understand the science — and your individual goals.</div>
+              <div class="caption-item">Ready to invest in your metabolic health? Our provider-guided programs start with a conversation. Book a complimentary consultation today.</div>
+            </div>
+            <div class="flip-back-close">Back</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div><div class="term-phrase">"Clinically supported weight wellness"</div><div class="term-why">Combines credibility and wellness framing safely</div></div>
+            <div class="flip-hint">See captions</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-term">"Clinically supported weight wellness"</div><div class="flip-back-sublabel">Caption ideas</div>
+            <div class="caption-list">
+              <div class="caption-item">Weight wellness isn't one-size-fits-all. Our clinically supported programs are individualized — because your body is. Talk to a provider today.</div>
+              <div class="caption-item">What does clinically supported weight wellness look like for you? Our team is ready to help you find out. Complimentary consults available now.</div>
+            </div>
+            <div class="flip-back-close">Back</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div><div class="term-phrase">"Provider-guided metabolic support"</div><div class="term-why">Emphasizes oversight without implying a specific compound</div></div>
+            <div class="flip-hint">See captions</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-term">"Provider-guided metabolic support"</div><div class="flip-back-sublabel">Caption ideas</div>
+            <div class="caption-list">
+              <div class="caption-item">Provider-guided metabolic support means you're never navigating your health goals alone. Our clinical team creates a plan built around you — and stays with you.</div>
+              <div class="caption-item">The difference is guidance. Our metabolic support programs are personalized, provider-directed, and designed for real, sustainable results. Book a consult.</div>
+            </div>
+            <div class="flip-back-close">Back</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div><div class="term-phrase">"Comprehensive weight wellness plan"</div><div class="term-why">Positions the program holistically, not as a drug transaction</div></div>
+            <div class="flip-hint">See captions</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-term">"Comprehensive weight wellness plan"</div><div class="flip-back-sublabel">Caption ideas</div>
+            <div class="caption-list">
+              <div class="caption-item">Weight wellness is more than a prescription. Our comprehensive plans include provider oversight, ongoing support, and a strategy built around your life.</div>
+              <div class="caption-item">A comprehensive plan makes all the difference. Talk to our team about what a truly supported weight wellness journey looks like — link in bio.</div>
+            </div>
+            <div class="flip-back-close">Back</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div><div class="term-phrase">"See if you're a candidate"</div><div class="term-why">Self-qualifying language — drives consults, lowers policy risk</div></div>
+            <div class="flip-hint">See captions</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-term">"See if you're a candidate"</div><div class="flip-back-sublabel">Caption ideas</div>
+            <div class="caption-list">
+              <div class="caption-item">Prescription weight management isn't right for everyone — but it might be right for you. See if you're a candidate with a complimentary provider consultation.</div>
+              <div class="caption-item">Curious about medically supervised weight loss? The first step is finding out if you qualify. Talk to one of our providers today — no commitment required.</div>
+            </div>
+            <div class="flip-back-close">Back</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div><div class="term-phrase">"Individualized weight loss support"</div><div class="term-why">Personalization framing without disease or drug claims</div></div>
+            <div class="flip-hint">See captions</div>
+          </div>
+          <div class="flip-back">
+            <div class="flip-back-term">"Individualized weight loss support"</div><div class="flip-back-sublabel">Caption ideas</div>
+            <div class="caption-list">
+              <div class="caption-item">Your weight loss journey is uniquely yours. Our individualized support programs are designed around your body, your goals, and your life — with a provider team behind you.</div>
+              <div class="caption-item">Stop starting over. Individualized weight loss support from a clinical team that knows you changes everything. Book a consultation and see the difference.</div>
+            </div>
+            <div class="flip-back-close">Back</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GLP-1 Avoid Box -->
+    <div class="avoid-box">
+      <div class="avoid-box-label">GLP-1 Specific — Never Use in Ads</div>
+      <div class="avoid-grid">
+        <div class="avoid-pill">Ozempic® / Wegovy® / Mounjaro® / Zepbound® (brand names for compounded products)</div>
+        <div class="avoid-pill">Semaglutide injections (implies equivalence to brand drug)</div>
+        <div class="avoid-pill">"Same as Ozempic" or "generic Wegovy"</div>
+        <div class="avoid-pill">"Lose X lbs" or specific weight loss outcome claims</div>
+        <div class="avoid-pill">Before/after imagery without full FTC disclosures</div>
+        <div class="avoid-pill">"FDA-approved" for any compounded formulation</div>
+        <div class="avoid-pill">Influencer posts showing self-injection of compounded product</div>
+        <div class="avoid-pill">"Cures," "treats," or "eliminates" obesity or diabetes</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- 02 PEPTIDES -->
+  <div class="section" data-service="peptides">
+    <div class="section-header">
+      <div class="section-num">02</div>
       <div>
         <h2 class="section-title">Peptide Therapy</h2>
         <p class="section-sub">Wellness framing only</p>
@@ -697,10 +935,10 @@
     </div>
   </div>
 
-  <!-- 02 IV THERAPY -->
+  <!-- 03 IV THERAPY -->
   <div class="section" data-service="iv">
     <div class="section-header">
-      <div class="section-num">02</div>
+      <div class="section-num">03</div>
       <div>
         <h2 class="section-title">IV Therapy</h2>
         <p class="section-sub">Hydration &amp; energy framing - permissible as a wellness service</p>
@@ -847,10 +1085,10 @@
     </div>
   </div>
 
-  <!-- 03 HRT -->
+  <!-- 04 HRT -->
   <div class="section" data-service="hrt">
     <div class="section-header">
-      <div class="section-num">03</div>
+      <div class="section-num">04</div>
       <div>
         <h2 class="section-title">Hormone Replacement Therapy</h2>
         <p class="section-sub">Balance &amp; quality of life framing - LegitScript certification required for Rx ads</p>
@@ -997,13 +1235,13 @@
     </div>
   </div>
 
-  <!-- 04 UNIVERSAL -->
+  <!-- 05 UNIVERSAL -->
   <div class="section" data-service="universal">
     <div class="section-header">
-      <div class="section-num">04</div>
+      <div class="section-num">05</div>
       <div>
         <h2 class="section-title">Universal Terms</h2>
-        <p class="section-sub">Safe across all three services - use freely</p>
+        <p class="section-sub">Safe across all services - use freely</p>
       </div>
     </div>
     <div class="universal-grid">
@@ -1123,10 +1361,10 @@
     </div>
   </div>
 
-  <!-- 05 APPROVED CTAs -->
+  <!-- 06 APPROVED CTAs -->
   <div class="section" data-service="ctas">
     <div class="section-header">
-      <div class="section-num">05</div>
+      <div class="section-num">06</div>
       <div>
         <h2 class="section-title">Approved CTAs</h2>
         <p class="section-sub">Compliant lower-funnel calls to action - lead-gen safe</p>
@@ -1155,7 +1393,7 @@
             <div class="flip-back-term">"Learn more about your options"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
               <div class="caption-item">Not sure where to start? Learn more about your options - our providers are here to walk you through everything we offer, no pressure.</div>
-              <div class="caption-item">Peptides. IV therapy. Hormone wellness. There's a lot to explore. Learn more about your options and find what fits your lifestyle - link in bio.</div>
+              <div class="caption-item">Peptides. IV therapy. Hormone wellness. Weight management. There's a lot to explore. Learn more about your options and find what fits - link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1232,7 +1470,7 @@
     </div>
     <div>
       <div class="rule-label">Rule of Thumb</div>
-      <p class="rule-text">If a term describes how someone will <em>feel</em> or what they <em>experience</em> - it's safe. If it describes what a treatment will <em>fix</em>, <em>cure</em>, or <em>diagnose</em> - it's a flag. Swap any medical verb for a wellness verb: <em>support, optimize, enhance, restore.</em></p>
+      <p class="rule-text">If a term describes how someone will <em>feel</em> or what they <em>experience</em> - it's safe. If it describes what a treatment will <em>fix</em>, <em>cure</em>, or <em>diagnose</em> - it's a flag. Swap any medical verb for a wellness verb: <em>support, optimize, enhance, restore.</em> For GLP-1 specifically: <em>always market the program, never the drug name.</em></p>
     </div>
   </div>
 
@@ -1244,7 +1482,7 @@
   <div class="footer-brand">Advanced <span>MedAesthetic</span> Partners</div>
   <div class="footer-meta">
     weramp.com &nbsp;·&nbsp; Internal Reference Document &nbsp;·&nbsp; 2025–2026<br>
-    <span style="font-size:10px;opacity:.6">Sources: Meta Ad Standards · LegitScript · FTC Health Claim Guidelines · FDA Peptide Compounding Rules 2024</span>
+    <span style="font-size:10px;opacity:.6">Sources: Meta Ad Standards · LegitScript · FTC Health Claim Guidelines · FDA Peptide Compounding Rules · FDA GLP-1 Warning Letters March 2026</span>
   </div>
 </footer>
 
@@ -1265,7 +1503,6 @@
           section.classList.remove('hidden');
         } else {
           section.classList.add('hidden');
-          // Unflip any flipped cards in hidden sections
           section.querySelectorAll('.flip-card.flipped').forEach(c => c.classList.remove('flipped'));
         }
       });
