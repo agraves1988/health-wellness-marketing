@@ -494,6 +494,30 @@
     display: none;
   }
 
+
+  /* ── SERVICE SELECTOR ── */
+  .service-selector {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .service-btn {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase;
+    padding: 10px 22px; border-radius: 40px;
+    border: 1px solid var(--blush);
+    background: transparent; color: var(--mauve);
+    cursor: pointer; transition: all .2s;
+  }
+  .service-btn:hover { border-color: var(--tan); color: var(--ink); }
+  .service-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+  }
+
   /* ── COMPLIANCE CHECKER SECTION ── */
   .checker-wrap {
     background: var(--white);
@@ -1656,14 +1680,23 @@
     </div>
   </div>
 
-  <!-- ── 07 PEPTIDE POST CHECKER ── -->
+
+  <!-- ── 07 POST COMPLIANCE CHECKER ── -->
   <div class="section" data-service="checker">
     <div class="section-header">
       <div class="section-num">07</div>
       <div>
-        <h2 class="section-title">Peptide Post Checker</h2>
-        <p class="section-sub">Paste any caption, graphic copy, or patient handout before publishing</p>
+        <h2 class="section-title">Post Compliance Checker</h2>
+        <p class="section-sub">Select a service, paste your content, and get a real-time compliance score</p>
       </div>
+    </div>
+
+    <!-- SERVICE SELECTOR -->
+    <div class="service-selector">
+      <button class="service-btn active" data-svc="peptides">Peptides</button>
+      <button class="service-btn" data-svc="glp1">GLP-1 / Weight</button>
+      <button class="service-btn" data-svc="iv">IV Therapy</button>
+      <button class="service-btn" data-svc="hrt">Hormone (HRT)</button>
     </div>
 
     <div class="checker-wrap">
@@ -1673,7 +1706,7 @@
         </div>
         <div>
           <div class="checker-header-label">Live Compliance Review</div>
-          <div class="checker-header-title">Peptide Post Checker</div>
+          <div class="checker-header-title" id="checker-title">Peptide Post Checker</div>
         </div>
       </div>
       <div class="checker-body">
@@ -1695,54 +1728,30 @@
           <div class="score-track">
             <div class="score-fill" id="score-fill"></div>
           </div>
-
           <div id="flags-section"></div>
           <div id="missing-section"></div>
           <div id="pass-section"></div>
-
-          <p style="font-size: 11px; color: var(--mauve); margin-top: 24px; line-height: 1.7; border-top: 1px solid var(--blush); padding-top: 20px;">
-            This tool checks against AMP peptide compliance guidelines including FDA compounding rules, FTC health claim standards, and Meta advertising policy. It does not constitute legal advice. Consult your compounding pharmacy's legal team before publishing high-exposure content.
+          <p style="font-size:11px;color:var(--mauve);margin-top:24px;line-height:1.7;border-top:1px solid var(--blush);padding-top:20px;">
+            This tool checks against AMP compliance guidelines including FDA compounding rules, FTC health claim standards, and Meta advertising policy. It does not constitute legal advice. Consult your legal team before publishing high-exposure content.
           </p>
         </div>
       </div>
     </div>
 
-    <!-- QUICK RULES -->
-    <div style="margin-top: 40px;">
-      <div style="font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">Key rules at a glance <span style="flex:1; height:1px; background: rgba(185,151,91,.25); display:block;"></span></div>
-      <div class="ref-grid">
-        <div class="ref-card">
-          <div class="ref-card-label">Critical</div>
-          <div class="ref-card-title">No absolute treatment claims</div>
-          <div class="ref-card-body">Replace "reduces inflammation" or "heals tissue" with qualifying language: "may support," "some patients experience," or "may help."</div>
-        </div>
-        <div class="ref-card">
-          <div class="ref-card-label">Required</div>
-          <div class="ref-card-title">FDA disclaimer on all content</div>
-          <div class="ref-card-body">"These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease." Required in caption or post body.</div>
-        </div>
-        <div class="ref-card">
-          <div class="ref-card-label">Required</div>
-          <div class="ref-card-title">Prescriber disclaimer</div>
-          <div class="ref-card-body">"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review." Must appear somewhere in the content.</div>
-        </div>
-        <div class="ref-card">
-          <div class="ref-card-label">High Priority</div>
-          <div class="ref-card-title">No disease or condition claims</div>
-          <div class="ref-card-body">Do not describe any peptide as treating a disease or condition. "Gut repair," "chronic irritation," and "inflammatory disease" are flags. Use wellness framing.</div>
-        </div>
-
-      </div>
+    <!-- DYNAMIC RULES GRID -->
+    <div style="margin-top:40px;">
+      <div style="font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px;">Key rules at a glance <span style="flex:1;height:1px;background:rgba(185,151,91,.25);display:block;"></span></div>
+      <div class="ref-grid" id="rules-grid"></div>
     </div>
 
-    <!-- REQUIRED DISCLAIMER -->
+    <!-- DISCLAIMER BOX -->
     <div class="disclaimer-box">
       <div class="disclaimer-icon">
         <svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="#B9975B" stroke-width="1.2"/><path d="M11 7v5" stroke="#B9975B" stroke-width="1.4" stroke-linecap="round"/><circle cx="11" cy="15" r=".8" fill="#B9975B"/></svg>
       </div>
       <div>
-        <div class="disclaimer-label">Required disclaimer — copy &amp; use on every peptide post</div>
-        <p class="disclaimer-text">"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review. Individual results vary. These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease."</p>
+        <div class="disclaimer-label" id="disclaimer-label">Required disclaimer — copy &amp; use on every peptide post</div>
+        <p class="disclaimer-text" id="disclaimer-text">"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review. Individual results vary. These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease."</p>
       </div>
     </div>
   </div>
@@ -1775,116 +1784,34 @@
 </footer>
 
 <script>
-  /* ── FILTER BAR ── */
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const sections = document.querySelectorAll('.section[data-service]');
+  /* filter bar handled below */
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      sections.forEach(section => {
-        if (filter === 'all' || section.dataset.service === filter) {
-          section.classList.remove('hidden');
-        } else {
-          section.classList.add('hidden');
-          section.querySelectorAll('.flip-card.flipped').forEach(c => c.classList.remove('flipped'));
-        }
-      });
-    });
-  });
-
-  /* ── COMPLIANCE CHECKER ── */
-  const rules = [
-    {
-      id: "bpc157",
-      type: "flag",
-      severity: "critical",
-      label: "BPC-157 referenced by name",
-      detail: "Remove all references to BPC-157. List PDA as \"PDA (Pentadeca Arginate)\" only. Publicly equating PDA with BPC-157 carries significant regulatory and platform risk.",
-      test: t => /bpc[\s\-]?157/i.test(t)
-    },
-    {
-      id: "tb500_claims",
-      type: "flag",
-      severity: "critical",
-      label: "TB-500 named with treatment-level claims",
-      detail: "TB-500 is FDA Category 2. If referenced publicly with outcome language, every claim must use qualifying language and the full FDA disclaimer must accompany the post.",
-      test: t => /tb[\s\-]?500/i.test(t) && /(accelerat|heals?|treat|cure|repair|reduce|eliminat|used to)/i.test(t)
-    },
+  /* ── ALL RULE SETS ── */
+  const UNIVERSAL_FLAGS = [
     {
       id: "absolute_claims",
-      type: "flag",
-      severity: "high",
+      type: "flag", severity: "high",
       label: "Absolute benefit claims detected",
       detail: "Replace flat claims (\"reduces inflammation,\" \"heals tissue,\" \"accelerates healing\") with qualifying language: \"may support,\" \"some patients experience,\" or \"may help.\"",
-      test: t => [
-        /reduces? inflammation/i,
-        /heals? (tissue|muscle|tendon|injury|wound)/i,
-        /eliminates? (pain|inflammation)/i,
-        /\baccelerates? healing\b/i,
-        /\bcures?\b/i,
-        /\btreats?\b/i,
-        /\bprevents?\b/i,
-        /proven to\b/i,
-        /clinically proven/i,
-        /is used to (heal|treat|cure|repair)/i,
-        /will (improve|reduce|increase|boost|enhance)/i
-      ].some(p => p.test(t))
+      test: t => [/reduces? inflammation/i,/heals? (tissue|muscle|tendon|injury|wound)/i,/eliminates? (pain|inflammation)/i,/\baccelerates? healing\b/i,/\bcures?\b/i,/\btreats?\b/i,/\bprevents?\b/i,/proven to\b/i,/clinically proven/i,/is used to (heal|treat|cure|repair)/i,/will (improve|reduce|increase|boost|enhance)/i].some(p => p.test(t))
     },
     {
       id: "disease_claims",
-      type: "flag",
-      severity: "high",
+      type: "flag", severity: "high",
       label: "Disease or condition treatment claim",
-      detail: "Do not describe any peptide as treating a specific disease or condition. Use wellness and support language only.",
+      detail: "Do not describe any service as treating a specific disease or condition. Use wellness and support language only.",
       test: t => /(inflammatory disease|autoimmune|arthritis|GERD|IBS|ulcer|cancer|depression|anxiety|PTSD|diabetes|chronic illness)/i.test(t)
     },
     {
-      id: "gut_repair",
-      type: "flag",
-      severity: "medium",
-      label: "\"Gut repair\" language",
-      detail: "\"Gut repair\" is a medical claim. Replace with \"digestive wellness support\" or \"gut comfort.\"",
-      test: t => /gut repair/i.test(t)
-    },
-    {
-      id: "chronic_irritation",
-      type: "flag",
-      severity: "medium",
-      label: "\"Chronic irritation\" language",
-      detail: "\"Chronic irritation\" edges into condition claim territory. Replace with \"digestive wellness\" or \"ongoing comfort support.\"",
-      test: t => /chronic irritation/i.test(t)
-    },
-    {
-      id: "combat_language",
-      type: "flag",
-      severity: "medium",
-      label: "Assertive \"combat\" language",
-      detail: "\"Combat age-related HGH decline\" or similar phrasing is assertive. Soften to \"may help address\" or \"discussed for its potential role in supporting.\"",
-      test: t => /combat (age|hgh|decline|fatigue|disease)/i.test(t)
-    },
-    {
       id: "fda_disclaimer",
-      type: "missing",
-      severity: "required",
+      type: "missing", severity: "required",
       label: "FDA disclaimer missing",
-      detail: "All peptide content must include: \"These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease.\"",
+      detail: "All content must include: \"These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease.\"",
       test: t => !/(not.*evaluated.*FDA|not intended to diagnose)/i.test(t)
     },
     {
-      id: "prescriber_disclaimer",
-      type: "missing",
-      severity: "required",
-      label: "Prescriber disclaimer missing",
-      detail: "Add: \"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review.\"",
-      test: t => !/(prescribed by a licensed|licensed medical provider|requires? a prescription|under medical supervision)/i.test(t)
-    },
-    {
       id: "results_vary",
-      type: "missing",
-      severity: "recommended",
+      type: "missing", severity: "recommended",
       label: "\"Individual results vary\" not included",
       detail: "Add \"Individual results vary\" to the post or caption.",
       test: t => !/(individual results vary|results (may|will) vary|results vary)/i.test(t)
@@ -1902,20 +1829,266 @@
       label: "Consultation-first call to action",
       detail: "Post directs patients to consult before starting therapy.",
       test: t => /(consult|consultation|schedule|speak with|talk to|book)/i.test(t)
-    },
-    {
-      id: "pda_correct",
-      type: "pass",
-      label: "PDA listed correctly without BPC-157 association",
-      detail: "PDA referenced as Pentadeca Arginate and not linked to BPC-157.",
-      test: t => /pentadeca arginate/i.test(t) && !/bpc[\s\-]?157/i.test(t)
     }
   ];
 
+  const rulesets = {
+    peptides: {
+      title: "Peptide Post Checker",
+      disclaimer: { label: "Required disclaimer — copy & use on every peptide post", text: '"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review. Individual results vary. These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease."' },
+      rules: [
+        ...UNIVERSAL_FLAGS,
+        {
+          id: "gut_repair", type: "flag", severity: "medium",
+          label: "\"Gut repair\" language",
+          detail: "\"Gut repair\" is a medical claim. Replace with \"digestive wellness support\" or \"gut comfort.\"",
+          test: t => /gut repair/i.test(t)
+        },
+        {
+          id: "chronic_irritation", type: "flag", severity: "medium",
+          label: "\"Chronic irritation\" language",
+          detail: "\"Chronic irritation\" edges into condition claim territory. Replace with \"digestive wellness\" or \"ongoing comfort support.\"",
+          test: t => /chronic irritation/i.test(t)
+        },
+        {
+          id: "combat_language", type: "flag", severity: "medium",
+          label: "Assertive \"combat\" language",
+          detail: "\"Combat age-related HGH decline\" or similar phrasing is assertive. Soften to \"may help address\" or \"discussed for its potential role in supporting.\"",
+          test: t => /combat (age|hgh|decline|fatigue|disease)/i.test(t)
+        },
+        {
+          id: "prescriber_disclaimer", type: "missing", severity: "required",
+          label: "Prescriber disclaimer missing",
+          detail: "Add: \"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review.\"",
+          test: t => !/(prescribed by a licensed|licensed medical provider|requires? a prescription|under medical supervision)/i.test(t)
+        },
+        {
+          id: "pda_correct", type: "pass",
+          label: "PDA listed correctly without BPC-157 association",
+          detail: "PDA referenced as Pentadeca Arginate and not linked to BPC-157.",
+          test: t => /pentadeca arginate/i.test(t) && !/bpc[\s\-]?157/i.test(t)
+        }
+      ],
+      refCards: [
+        { label: "Critical", title: "No absolute treatment claims", body: "Replace \"reduces inflammation\" or \"heals tissue\" with qualifying language: \"may support,\" \"some patients experience,\" or \"may help.\"" },
+        { label: "Required", title: "FDA disclaimer on all content", body: "\"These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease.\" Required in every post." },
+        { label: "Required", title: "Prescriber disclaimer", body: "\"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review.\" Must appear in the content." },
+        { label: "High Priority", title: "No disease or condition claims", body: "Do not describe any peptide as treating a disease or condition. \"Gut repair,\" \"chronic irritation,\" and \"inflammatory disease\" are all flags." }
+      ]
+    },
+
+    glp1: {
+      title: "GLP-1 / Weight Management Checker",
+      disclaimer: { label: "Required disclaimer — copy & use on every GLP-1 post", text: '"Our weight management programs are medically supervised and provider-guided. Individual results vary. These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease. All therapies require a provider consultation."' },
+      rules: [
+        ...UNIVERSAL_FLAGS,
+        {
+          id: "brand_name_drug", type: "flag", severity: "critical",
+          label: "Brand-name drug referenced for compounded product",
+          detail: "Never use Ozempic®, Wegovy®, Mounjaro®, or Zepbound® when describing a compounded GLP-1. Market the program, not the drug name.",
+          test: t => /(ozempic|wegovy|mounjaro|zepbound)/i.test(t)
+        },
+        {
+          id: "semaglutide_equiv", type: "flag", severity: "critical",
+          label: "Implying equivalence to brand-name drug",
+          detail: "Phrases like \"same as Ozempic\" or \"generic Wegovy\" imply sameness with an FDA-approved drug. FDA issued warning letters for this in March 2026.",
+          test: t => /(same as (ozempic|wegovy|mounjaro)|generic (wegovy|ozempic|mounjaro)|semaglutide injection)/i.test(t)
+        },
+        {
+          id: "specific_weight_claim", type: "flag", severity: "high",
+          label: "Specific weight loss outcome claim",
+          detail: "\"Lose X lbs,\" \"drop X%,\" or \"lose weight fast\" are specific outcome claims. Replace with \"may support healthy weight management\" or \"medically supervised weight wellness.\"",
+          test: t => /(lose \d+\s*(lbs?|pounds?|kg)|drop \d+|shed \d+|lose weight fast|rapid weight loss|melt fat|burn fat|fat loss|fat burning)/i.test(t)
+        },
+        {
+          id: "fda_approved_compounded", type: "flag", severity: "critical",
+          label: "\"FDA-approved\" used for compounded product",
+          detail: "Compounded GLP-1 formulations are not FDA-approved. Never use \"FDA-approved\" to describe a compounded product.",
+          test: t => /fda.?approved/i.test(t)
+        },
+        {
+          id: "prescriber_disclaimer_glp1", type: "missing", severity: "required",
+          label: "Provider consultation disclaimer missing",
+          detail: "Add: \"All therapies require a consultation with a licensed medical provider. Individual results vary.\"",
+          test: t => !/(prescribed by a licensed|licensed medical provider|requires? a (prescription|consultation)|provider consultation|under medical supervision)/i.test(t)
+        },
+        {
+          id: "program_framing", type: "pass",
+          label: "Program framing used (not drug-focused)",
+          detail: "Post markets the program or care model rather than a specific drug compound.",
+          test: t => /(medically supervised|provider.guided|weight (wellness|management|program)|metabolic wellness|clinically supported)/i.test(t)
+        }
+      ],
+      refCards: [
+        { label: "Critical", title: "Never name brand drugs for compounded products", body: "Ozempic®, Wegovy®, Mounjaro®, and Zepbound® cannot be used to describe compounded GLP-1 formulations. FDA issued 30 warning letters for this in March 2026." },
+        { label: "Critical", title: "\"FDA-approved\" is prohibited for compounded products", body: "No compounded formulation is FDA-approved. Using this phrase is grounds for a warning letter." },
+        { label: "High Priority", title: "No specific weight loss outcome claims", body: "\"Lose X lbs\" or \"drop X%\" are specific outcome claims. Use \"may support healthy weight management\" instead." },
+        { label: "Required", title: "Provider consultation disclaimer", body: "All GLP-1 content must state that therapy requires a provider consultation. Add \"Individual results vary\" and the FDA disclaimer." }
+      ]
+    },
+
+    iv: {
+      title: "IV Therapy Post Checker",
+      disclaimer: { label: "Required disclaimer — copy & use on every IV therapy post", text: '"IV therapy services are administered by licensed clinical staff. Individual responses vary. These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease."' },
+      rules: [
+        ...UNIVERSAL_FLAGS,
+        {
+          id: "iv_cure_claims", type: "flag", severity: "high",
+          label: "IV cure or treatment claim",
+          detail: "IV therapy cannot be described as treating, curing, or preventing any condition. \"Cures hangovers,\" \"treats dehydration disease,\" or \"eliminates fatigue\" all cross the line.",
+          test: t => /(cures? (hangover|migraine|fatigue|illness)|treats? (dehydration|infection|flu)|eliminates? (fatigue|exhaustion|illness)|IV (cures|treats|heals|fixes))/i.test(t)
+        },
+        {
+          id: "iv_immune_claims", type: "flag", severity: "high",
+          label: "Immune system treatment claim",
+          detail: "\"Boosts your immune system\" or \"fights infection\" are treatment claims. Replace with \"may support immune wellness\" or \"supports your body's natural defenses.\"",
+          test: t => /(boosts? (your )?(immune system|immunity)|fights? infection|kills? bacteria|fights? (the )?flu|immune boost)/i.test(t)
+        },
+        {
+          id: "iv_detox_claims", type: "flag", severity: "medium",
+          label: "\"Detox\" or cleanse language",
+          detail: "\"Detoxifies your liver,\" \"flushes toxins,\" or \"full body detox\" are medical claims with no substantiation. Use \"may support your body's natural processes\" instead.",
+          test: t => /(detox(ifies?|ifying|ification)?|flushes? toxins|full.body (detox|cleanse)|cleanse your (liver|body|system))/i.test(t)
+        },
+        {
+          id: "iv_energy_absolute", type: "flag", severity: "medium",
+          label: "Absolute energy outcome claim",
+          detail: "\"Will give you energy\" or \"guaranteed energy boost\" are absolute claims. Use \"may support your natural energy\" or \"many clients report feeling energized.\"",
+          test: t => /(will give you energy|guaranteed energy|instant energy|eliminates? (tiredness|fatigue|exhaustion))/i.test(t)
+        },
+        {
+          id: "clinical_supervision", type: "missing", severity: "required",
+          label: "Clinical administration disclaimer missing",
+          detail: "Add: \"IV therapy services are administered by licensed clinical staff.\"",
+          test: t => !/(licensed (clinical|medical|nursing) staff|administered by|clinically administered|under clinical supervision|licensed provider|registered nurse|RN)/i.test(t)
+        },
+        {
+          id: "iv_wellness_framing", type: "pass",
+          label: "Wellness framing used",
+          detail: "Post uses experiential or wellness-support language rather than treatment claims.",
+          test: t => /(feel replenished|recharge|restore|support your (natural |body's )?energy|wellness (infusion|drip|session)|hydration (drip|session)|nutrient infusion)/i.test(t)
+        }
+      ],
+      refCards: [
+        { label: "Critical", title: "No cure or treatment claims", body: "IV therapy cannot be described as treating, curing, or preventing any condition. \"Cures hangovers\" or \"treats dehydration\" cross the line into medical claims." },
+        { label: "High Priority", title: "No immune system treatment claims", body: "\"Boosts your immune system\" or \"fights infection\" are treatment claims. Replace with \"may support immune wellness\" or \"supports your body's natural defenses.\"" },
+        { label: "High Priority", title: "No detox language", body: "\"Flushes toxins\" or \"full body detox\" are unsubstantiated medical claims. Use \"may support your body's natural processes\" instead." },
+        { label: "Required", title: "Clinical administration disclaimer", body: "State that IV services are administered by licensed clinical staff. Required on all IV therapy content." }
+      ]
+    },
+
+    hrt: {
+      title: "Hormone Replacement (HRT) Checker",
+      disclaimer: { label: "Required disclaimer — copy & use on every HRT post", text: '"Hormone therapy is prescribed by a licensed medical provider following consultation, lab review, and clinical evaluation. Individual results vary. These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease."' },
+      rules: [
+        ...UNIVERSAL_FLAGS,
+        {
+          id: "hrt_disease_claims", type: "flag", severity: "critical",
+          label: "Menopause/andropause disease treatment claim",
+          detail: "HRT cannot be described as treating menopause, andropause, or hormonal disorders as diseases. Use \"may support hormonal wellness\" or \"hormone optimization\" instead.",
+          test: t => /(treats? (menopause|andropause|hormonal disorder|hypogonadism)|cures? (menopause|low testosterone)|eliminates? (hot flashes|menopause symptoms))/i.test(t)
+        },
+        {
+          id: "hrt_mood_claims", type: "flag", severity: "high",
+          label: "Mental health or mood disorder claim",
+          detail: "\"Eliminates depression,\" \"treats anxiety,\" or \"cures mood swings\" are mental health claims that require clinical substantiation. Use \"may support emotional wellness\" or \"energy and vitality support.\"",
+          test: t => /(treats? (depression|anxiety|mood disorder)|cures? (depression|anxiety)|eliminates? (depression|mood swings)|fixes? (mood|depression))/i.test(t)
+        },
+        {
+          id: "hrt_libido_claims", type: "flag", severity: "medium",
+          label: "Absolute sexual performance claim",
+          detail: "\"Restores your sex drive\" or \"fixes low libido\" are absolute outcome claims. Replace with \"may support healthy libido\" or \"vitality and wellness support.\"",
+          test: t => /(restores? (your )?(sex drive|libido)|fixes? (low libido|sexual dysfunction)|cures? (erectile dysfunction|ED)|guaranteed (libido|sex drive))/i.test(t)
+        },
+        {
+          id: "hrt_anti_aging_claim", type: "flag", severity: "medium",
+          label: "Absolute anti-aging claim",
+          detail: "\"Reverses aging,\" \"turns back the clock,\" or \"makes you X years younger\" are absolute claims. Use \"may support vitality\" or \"longevity and wellness support.\"",
+          test: t => /(reverses? aging|turns? back (the )?clock|makes? you \d+ years younger|anti.aging (therapy|treatment)|stops? aging)/i.test(t)
+        },
+        {
+          id: "hrt_prescriber_disclaimer", type: "missing", severity: "required",
+          label: "Prescriber and lab review disclaimer missing",
+          detail: "Add: \"Hormone therapy is prescribed by a licensed medical provider following consultation, lab review, and clinical evaluation.\"",
+          test: t => !/(prescribed by a licensed|licensed medical provider|lab review|clinical evaluation|requires? a prescription|under medical supervision)/i.test(t)
+        },
+        {
+          id: "hrt_optimization_framing", type: "pass",
+          label: "Optimization or wellness framing used",
+          detail: "Post uses hormone optimization or wellness language rather than treatment claims.",
+          test: t => /(hormone (optimization|wellness|balance)|optimized?|vitality|energy (and|&) vitality|feel like (yourself|your best)|provider.guided hormone)/i.test(t)
+        }
+      ],
+      refCards: [
+        { label: "Critical", title: "No menopause/andropause disease treatment claims", body: "HRT cannot be described as treating menopause or andropause as diseases. Use \"hormone optimization\" or \"hormonal wellness support\" instead." },
+        { label: "High Priority", title: "No mental health or mood disorder claims", body: "\"Treats depression\" or \"eliminates anxiety\" require clinical substantiation. Use \"may support emotional wellness\" or \"energy and vitality support.\"" },
+        { label: "High Priority", title: "No absolute anti-aging claims", body: "\"Reverses aging\" or \"turns back the clock\" are absolute claims. Stay in aspirational wellness framing: \"may support vitality\" or \"longevity support.\"" },
+        { label: "Required", title: "Prescriber + lab review disclaimer", body: "HRT content must state that therapy is prescribed following consultation and lab review. Required on all hormone-related content." }
+      ]
+    }
+  };
+
+  /* ── SERVICE SELECTOR ── */
+  let activeService = 'peptides';
+
+  function renderRulesGrid(service) {
+    const grid = document.getElementById('rules-grid');
+    const cards = rulesets[service].refCards;
+    grid.innerHTML = cards.map(c => `
+      <div class="ref-card">
+        <div class="ref-card-label">${c.label}</div>
+        <div class="ref-card-title">${c.title}</div>
+        <div class="ref-card-body">${c.body}</div>
+      </div>`).join('');
+  }
+
+  function renderDisclaimer(service) {
+    const d = rulesets[service].disclaimer;
+    document.getElementById('disclaimer-label').innerHTML = d.label;
+    document.getElementById('disclaimer-text').textContent = d.text;
+  }
+
+  document.querySelectorAll('.service-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeService = btn.dataset.svc;
+      document.getElementById('checker-title').textContent = rulesets[activeService].title;
+      renderRulesGrid(activeService);
+      renderDisclaimer(activeService);
+      clearAll();
+    });
+  });
+
+  // Init on load
+  renderRulesGrid('peptides');
+  renderDisclaimer('peptides');
+
+  /* ── FILTER BAR (top nav) ── */
+  const filterBtns2 = document.querySelectorAll('.filter-btn');
+  const sections = document.querySelectorAll('.section[data-service]');
+  filterBtns2.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter;
+      filterBtns2.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      sections.forEach(section => {
+        if (filter === 'all' || section.dataset.service === filter) {
+          section.classList.remove('hidden');
+        } else {
+          section.classList.add('hidden');
+          section.querySelectorAll('.flip-card.flipped').forEach(c => c.classList.remove('flipped'));
+        }
+      });
+    });
+  });
+
+  /* ── COMPLIANCE CHECKER ── */
   function checkCompliance() {
     const text = document.getElementById("post-input").value.trim();
     if (!text) return;
 
+    const rules = rulesets[activeService].rules;
     const flags = [];
     const missing = [];
     const passes = [];
@@ -1945,24 +2118,17 @@
     scoreEl.textContent = score + "/100";
 
     if (score >= 85) {
-      scoreEl.style.color = "#1a5c35";
-      fillEl.style.background = "#2a7a4a";
-      verdictEl.textContent = "Ready to publish";
-      verdictEl.style.color = "#1a5c35";
+      scoreEl.style.color = "#1a5c35"; fillEl.style.background = "#2a7a4a";
+      verdictEl.textContent = "Ready to publish"; verdictEl.style.color = "#1a5c35";
     } else if (score >= 60) {
-      scoreEl.style.color = "#6b4a0e";
-      fillEl.style.background = "#c08a20";
-      verdictEl.textContent = "Needs revision before publishing";
-      verdictEl.style.color = "#6b4a0e";
+      scoreEl.style.color = "#6b4a0e"; fillEl.style.background = "#c08a20";
+      verdictEl.textContent = "Needs revision before publishing"; verdictEl.style.color = "#6b4a0e";
     } else {
-      scoreEl.style.color = "#7a2e1e";
-      fillEl.style.background = "#b84a30";
-      verdictEl.textContent = "Do not publish — significant issues found";
-      verdictEl.style.color = "#7a2e1e";
+      scoreEl.style.color = "#7a2e1e"; fillEl.style.background = "#b84a30";
+      verdictEl.textContent = "Do not publish — significant issues found"; verdictEl.style.color = "#7a2e1e";
     }
 
     fillEl.style.width = score + "%";
-
     renderFlags(flags);
     renderMissing(missing);
     renderPasses(passes);
@@ -1974,62 +2140,36 @@
   function renderFlags(flags) {
     const el = document.getElementById("flags-section");
     if (!flags.length) { el.innerHTML = ""; return; }
-
     const badgeMap = { critical: "badge-critical", high: "badge-high", medium: "badge-medium" };
     const labelMap = { critical: "Critical", high: "High priority", medium: "Review" };
-
     let html = `<div class="result-section"><div class="result-section-label">Fix before posting</div>`;
     flags.forEach(item => {
-      html += `<div class="result-item ${item.severity}">
-        <div class="result-item-top">
-          <span class="result-badge ${badgeMap[item.severity]}">${labelMap[item.severity]}</span>
-          <span class="result-item-title">${item.label}</span>
-        </div>
-        <div class="result-item-detail">${item.detail}</div>
-      </div>`;
+      html += `<div class="result-item ${item.severity}"><div class="result-item-top"><span class="result-badge ${badgeMap[item.severity]}">${labelMap[item.severity]}</span><span class="result-item-title">${item.label}</span></div><div class="result-item-detail">${item.detail}</div></div>`;
     });
-    html += `</div>`;
-    el.innerHTML = html;
+    el.innerHTML = html + `</div>`;
   }
 
   function renderMissing(missing) {
     const el = document.getElementById("missing-section");
     if (!missing.length) { el.innerHTML = ""; return; }
-
     const classMap = { required: "missing-required", recommended: "missing-recommended" };
     const badgeMap = { required: "badge-required", recommended: "badge-recommended" };
     const labelMap = { required: "Required", recommended: "Recommended" };
-
     let html = `<div class="result-section"><div class="result-section-label">Required additions</div>`;
     missing.forEach(item => {
-      html += `<div class="result-item ${classMap[item.severity]}">
-        <div class="result-item-top">
-          <span class="result-badge ${badgeMap[item.severity]}">${labelMap[item.severity]}</span>
-          <span class="result-item-title">${item.label}</span>
-        </div>
-        <div class="result-item-detail">${item.detail}</div>
-      </div>`;
+      html += `<div class="result-item ${classMap[item.severity]}"><div class="result-item-top"><span class="result-badge ${badgeMap[item.severity]}">${labelMap[item.severity]}</span><span class="result-item-title">${item.label}</span></div><div class="result-item-detail">${item.detail}</div></div>`;
     });
-    html += `</div>`;
-    el.innerHTML = html;
+    el.innerHTML = html + `</div>`;
   }
 
   function renderPasses(passes) {
     const el = document.getElementById("pass-section");
     if (!passes.length) { el.innerHTML = ""; return; }
-
     let html = `<div class="result-section"><div class="result-section-label">Checks passed</div>`;
     passes.forEach(item => {
-      html += `<div class="result-item pass">
-        <div class="result-item-top">
-          <span class="result-badge badge-pass">Pass</span>
-          <span class="result-item-title">${item.label}</span>
-        </div>
-        <div class="result-item-detail">${item.detail}</div>
-      </div>`;
+      html += `<div class="result-item pass"><div class="result-item-top"><span class="result-badge badge-pass">Pass</span><span class="result-item-title">${item.label}</span></div><div class="result-item-detail">${item.detail}</div></div>`;
     });
-    html += `</div>`;
-    el.innerHTML = html;
+    el.innerHTML = html + `</div>`;
   }
 
   function clearAll() {
