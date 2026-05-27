@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AMP - Green-Light Terms & Approved Phrases</title>
+<title>AMP - Green-Light Terms, Approved Phrases & Compliance Checker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -17,6 +17,18 @@
     --cream:  #F7F3EF;
     --white:  #FFFFFF;
     --ink:    #1A1A2E;
+    --danger-bg: #fdf0ee;
+    --danger-border: #e8b4a8;
+    --danger-text: #7a2e1e;
+    --warn-bg: #fdf6ec;
+    --warn-border: #e8c97a;
+    --warn-text: #6b4a0e;
+    --info-bg: #eef3fb;
+    --info-border: #a8bfe8;
+    --info-text: #1e3a7a;
+    --pass-bg: #eef7f2;
+    --pass-border: #a8d8b8;
+    --pass-text: #1a5c35;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -141,7 +153,7 @@
     letter-spacing: .14em; text-transform: uppercase; color: var(--mauve);
   }
 
-  /* ── ALERT ── */
+  /* ── ALERTS ── */
   .alert-wrap { background: var(--navy); padding: 0 72px; }
   .alert-inner {
     border-top: 1px solid rgba(185,151,91,.3);
@@ -156,7 +168,6 @@
   .alert-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
   .alert-body { font-size: 13px; font-weight: 300; color: rgba(205,181,167,.85); line-height: 1.65; max-width: 780px; }
 
-  /* ── GLP-1 ENFORCEMENT BANNER ── */
   .glp-alert-wrap { background: #0a1628; padding: 0 72px; border-top: 1px solid rgba(185,151,91,.15); }
   .glp-alert-inner {
     display: flex; align-items: flex-start; gap: 24px; padding: 28px 0;
@@ -171,6 +182,9 @@
   .glp-alert-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #e8b86d; margin-bottom: 6px; }
   .glp-alert-body { font-size: 13px; font-weight: 300; color: rgba(205,181,167,.8); line-height: 1.65; max-width: 780px; }
   .glp-alert-body strong { color: var(--tan); font-weight: 500; }
+
+  /* ── GOLD DIVIDER ── */
+  .gold-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, var(--gold) 80%, transparent 100%); opacity: .35; }
 
   /* ── CONTENT ── */
   .content { max-width: 1100px; margin: 0 auto; padding: 80px 72px 100px; }
@@ -194,7 +208,7 @@
   .section-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 400; color: var(--navy); line-height: 1.1; margin-bottom: 6px; }
   .section-sub { font-size: 15px; font-weight: 400; letter-spacing: .03em; color: var(--mauve); font-style: italic; }
 
-  /* ── FLIP CARD SYSTEM ── */
+  /* ── FLIP CARDS ── */
   .term-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -290,6 +304,19 @@
   }
   .term-why { font-size: 13px; font-weight: 400; color: var(--mauve); line-height: 1.55; }
 
+  .flip-back-term {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; font-weight: 400; font-style: italic;
+    color: rgba(255,255,255,.55);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .flip-back-sublabel {
+    font-size: 9px; font-weight: 600; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 11px; flex-shrink: 0;
+  }
+
   /* ── UNIVERSAL CARDS ── */
   .universal-grid {
     display: grid;
@@ -338,47 +365,37 @@
     cursor: pointer;
     height: 280px;
   }
-  .cta-flip .flip-card-inner { height: 100%; }
-
+  .cta-flip .flip-card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .55s cubic-bezier(.4,0,.2,1);
+  }
+  .cta-flip.flipped .flip-card-inner { transform: rotateY(180deg); }
   .cta-flip .flip-front {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    padding: 24px 26px;
     background: var(--white);
-    position: relative; overflow: hidden;
-    border-radius: 0;
+    display: flex; flex-direction: column; justify-content: space-between;
     transition: background .2s;
   }
   .cta-flip:hover .flip-front { background: #fdfaf8; }
   .cta-flip .flip-front::before {
-    content: '';
-    position: absolute; top: 0; left: 0;
+    content: ''; position: absolute; top: 0; left: 0;
     width: 3px; height: 100%; background: var(--gold);
     opacity: 0; transition: opacity .2s;
   }
   .cta-flip:hover .flip-front::before { opacity: 1; }
-  .cta-flip .flip-front::after { display: none; }
   .cta-flip .flip-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    padding: 24px 26px;
     background: var(--navy);
-    border-radius: 0;
+    transform: rotateY(180deg);
+    display: flex; flex-direction: column; overflow: hidden;
   }
-
-  .cta-phrase {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px; font-weight: 400; color: var(--white); margin-bottom: 8px; line-height: 1.3;
-  }
-  .cta-why { font-size: 13px; font-weight: 400; color: var(--tan); line-height: 1.55; letter-spacing: .02em; }
-
-  /* ── RULE BOX ── */
-  .rule-box {
-    background: var(--navy); border-radius: 8px; padding: 40px 48px;
-    display: grid; grid-template-columns: auto 1fr;
-    gap: 32px; align-items: center; margin-top: 64px;
-    position: relative; overflow: hidden;
-  }
-  .rule-box::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
-  .rule-box::after { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(185,151,91,.15); pointer-events: none; }
-  .rule-icon-wrap { width: 56px; height: 56px; border: 1px solid rgba(185,151,91,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .rule-icon-wrap svg { width: 22px; height: 22px; }
-  .rule-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-  .rule-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; font-style: italic; color: var(--tan); line-height: 1.6; }
+  .cta-phrase { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; color: var(--navy); margin-bottom: 8px; line-height: 1.25; }
+  .cta-why { font-size: 13px; font-weight: 400; color: var(--mauve); line-height: 1.55; }
 
   /* ── GLP-1 AVOID BOX ── */
   .avoid-box {
@@ -421,51 +438,19 @@
     flex-shrink: 0;
   }
 
-  /* ── DIVIDER / FOOTER ── */
-  .gold-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, var(--gold) 80%, transparent 100%); opacity: .35; }
-
-  footer {
-    background: var(--navy); padding: 48px 72px;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+  /* ── RULE BOX ── */
+  .rule-box {
+    background: var(--navy); border-radius: 8px; padding: 40px 48px;
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 32px; align-items: center; margin-top: 64px;
+    position: relative; overflow: hidden;
   }
-  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--white); letter-spacing: .04em; }
-  .footer-brand span { color: var(--gold); font-style: italic; }
-  .footer-meta { font-size: 11px; font-weight: 400; color: var(--mauve); text-align: right; line-height: 1.7; }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .hero-left > * { animation: fadeUp .8s ease both; }
-  .hero-wordmark  { animation-delay: .1s; }
-  .hero-eyebrow   { animation-delay: .2s; }
-  .hero-title     { animation-delay: .3s; }
-  .hero-sub       { animation-delay: .4s; }
-  .hero-services  { animation-delay: .5s; }
-
-  @media (max-width: 768px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-right { display: none; }
-    .hero-left { padding: 60px 28px; }
-    .content { padding: 48px 28px 64px; }
-    .alert-wrap { padding: 0 28px; }
-    .glp-alert-wrap { padding: 0 28px; }
-    footer { padding: 40px 28px; }
-    .rule-box { grid-template-columns: 1fr; gap: 20px; padding: 32px 28px; }
-  }
-  .flip-back-term {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px; font-weight: 400; font-style: italic;
-    color: rgba(255,255,255,.55);
-    margin-bottom: 4px;
-    line-height: 1.2;
-  }
-  .flip-back-sublabel {
-    font-size: 9px; font-weight: 600; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--gold);
-    margin-bottom: 11px; flex-shrink: 0;
-  }
+  .rule-box::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
+  .rule-box::after { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; border: 1px solid rgba(185,151,91,.15); pointer-events: none; }
+  .rule-icon-wrap { width: 56px; height: 56px; border: 1px solid rgba(185,151,91,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .rule-icon-wrap svg { width: 22px; height: 22px; }
+  .rule-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .rule-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; font-style: italic; color: var(--tan); line-height: 1.6; }
 
   /* ── FILTER BAR ── */
   .filter-bar {
@@ -509,55 +494,268 @@
     display: none;
   }
 
-  /* CTA override */
-  .cta-flip .flip-card-inner {
-    position: relative; width: 100%; height: 100%;
-    transform-style: preserve-3d;
-    transition: transform .55s cubic-bezier(.4,0,.2,1);
-  }
-  .cta-flip.flipped .flip-card-inner { transform: rotateY(180deg); }
-  .cta-flip .flip-front {
-    position: absolute; inset: 0;
-    backface-visibility: hidden; -webkit-backface-visibility: hidden;
-    padding: 24px 26px;
+  /* ── COMPLIANCE CHECKER SECTION ── */
+  .checker-wrap {
     background: var(--white);
-    display: flex; flex-direction: column; justify-content: space-between;
+    border: 1px solid var(--blush);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+  .checker-header {
+    background: var(--navy);
+    padding: 28px 36px;
+    display: flex; align-items: center; gap: 16px;
+    border-bottom: 1px solid rgba(185,151,91,.2);
+  }
+  .checker-header-icon {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(185,151,91,.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .checker-header-icon svg { width: 16px; height: 16px; }
+  .checker-header-label {
+    font-size: 9px; font-weight: 600; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 4px;
+  }
+  .checker-header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 300; color: var(--white); line-height: 1.2;
+  }
+  .checker-body { padding: 36px; }
+
+  .input-label {
+    font-size: 10px; font-weight: 500; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--mauve); margin-bottom: 10px;
+    display: block;
+  }
+  textarea {
+    width: 100%;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px; font-weight: 300;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid var(--blush);
+    border-radius: 4px;
+    padding: 16px 20px;
+    resize: vertical;
+    min-height: 180px;
+    line-height: 1.7;
+    transition: border-color .2s;
+    outline: none;
+  }
+  textarea:focus { border-color: var(--gold); }
+  textarea::placeholder { color: var(--mauve); opacity: .6; }
+
+  .btn-row {
+    display: flex; gap: 12px; margin-top: 20px;
+  }
+  .btn-primary {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    padding: 14px 32px;
+    background: var(--navy); color: var(--gold);
+    border: 1px solid var(--navy);
+    border-radius: 40px; cursor: pointer;
+    transition: all .2s;
+    flex: 1;
+  }
+  .btn-primary:hover { background: #061e42; border-color: var(--gold); }
+  .btn-secondary {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    padding: 14px 28px;
+    background: transparent; color: var(--mauve);
+    border: 1px solid var(--blush);
+    border-radius: 40px; cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-secondary:hover { border-color: var(--tan); color: var(--ink); }
+
+  /* ── SCORE ── */
+  .score-wrap {
+    display: none;
+    margin-top: 36px;
+    padding-top: 36px;
+    border-top: 1px solid var(--blush);
+  }
+  .score-row {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 12px;
+  }
+  .score-label-text {
+    font-size: 10px; font-weight: 500; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--mauve);
+  }
+  .score-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px; font-weight: 300; line-height: 1;
+  }
+  .score-verdict {
+    font-size: 11px; font-weight: 500; letter-spacing: .12em;
+    text-transform: uppercase; margin-top: 4px;
+  }
+  .score-track {
+    height: 4px; background: var(--blush);
+    border-radius: 2px; overflow: hidden; margin-bottom: 36px;
+  }
+  .score-fill {
+    height: 100%; border-radius: 2px;
+    transition: width .6s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+
+  /* ── RESULT ITEMS ── */
+  .result-section { margin-bottom: 28px; }
+  .result-section-label {
+    font-size: 9px; font-weight: 600; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .result-section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: rgba(185,151,91,.25);
+  }
+
+  .result-item {
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin-bottom: 8px;
+    border-left: 3px solid;
+  }
+  .result-item.critical { background: var(--danger-bg); border-color: var(--danger-text); }
+  .result-item.high { background: var(--warn-bg); border-color: #c08a20; }
+  .result-item.medium { background: var(--info-bg); border-color: #4a72b8; }
+  .result-item.missing-required { background: var(--danger-bg); border-color: var(--danger-text); }
+  .result-item.missing-recommended { background: var(--warn-bg); border-color: #c08a20; }
+  .result-item.pass { background: var(--pass-bg); border-color: #2a7a4a; }
+
+  .result-item-top {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 5px;
+  }
+  .result-badge {
+    font-size: 9px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .badge-critical { background: rgba(122,46,30,.12); color: var(--danger-text); }
+  .badge-high { background: rgba(107,74,14,.1); color: var(--warn-text); }
+  .badge-medium { background: rgba(30,58,122,.1); color: var(--info-text); }
+  .badge-required { background: rgba(122,46,30,.12); color: var(--danger-text); }
+  .badge-recommended { background: rgba(107,74,14,.1); color: var(--warn-text); }
+  .badge-pass { background: rgba(26,92,53,.1); color: var(--pass-text); }
+
+  .result-item-title { font-size: 14px; font-weight: 500; color: var(--ink); }
+  .result-item-detail { font-size: 13px; font-weight: 300; color: var(--mauve); line-height: 1.55; }
+
+  /* ── QUICK RULES GRID (inside checker section) ── */
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+    background: var(--blush);
+    border: 1px solid var(--blush);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 0;
+  }
+  .ref-card {
+    background: var(--white);
+    padding: 24px 26px;
+    position: relative;
+    overflow: hidden;
     transition: background .2s;
   }
-  .cta-flip:hover .flip-front { background: #fdfaf8; }
-  .cta-flip .flip-front::before {
+  .ref-card::before {
     content: ''; position: absolute; top: 0; left: 0;
-    width: 3px; height: 100%; background: var(--gold);
-    opacity: 0; transition: opacity .2s;
+    width: 3px; height: 100%;
+    background: var(--gold); opacity: 0; transition: opacity .2s;
   }
-  .cta-flip:hover .flip-front::before { opacity: 1; }
-  .cta-flip .flip-back {
-    position: absolute; inset: 0;
-    backface-visibility: hidden; -webkit-backface-visibility: hidden;
-    padding: 24px 26px;
-    background: var(--navy);
-    transform: rotateY(180deg);
-    display: flex; flex-direction: column; overflow: hidden;
+  .ref-card:hover { background: #fdfaf8; }
+  .ref-card:hover::before { opacity: 1; }
+  .ref-card-label {
+    font-size: 9px; font-weight: 600; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
   }
-  .cta-phrase { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; color: var(--navy); margin-bottom: 8px; line-height: 1.25; }
-  .cta-why { font-size: 13px; font-weight: 400; color: var(--mauve); line-height: 1.55; }
+  .ref-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-weight: 400; color: var(--navy);
+    line-height: 1.25; margin-bottom: 8px;
+  }
+  .ref-card-body {
+    font-size: 12px; font-weight: 300; color: var(--mauve); line-height: 1.6;
+  }
 
+  /* ── REQUIRED DISCLAIMER BOX ── */
+  .disclaimer-box {
+    background: var(--navy); border-radius: 8px; padding: 36px 44px;
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 28px; align-items: center; margin-top: 36px;
+    position: relative; overflow: hidden;
+  }
+  .disclaimer-box::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
+  .disclaimer-icon { width: 52px; height: 52px; border: 1px solid rgba(185,151,91,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .disclaimer-icon svg { width: 20px; height: 20px; }
+  .disclaimer-label { font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .disclaimer-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 300; font-style: italic; color: var(--tan); line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); padding: 48px 72px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+  }
+  .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--white); letter-spacing: .04em; }
+  .footer-brand span { color: var(--gold); font-style: italic; }
+  .footer-meta { font-size: 11px; font-weight: 400; color: var(--mauve); text-align: right; line-height: 1.7; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-left > * { animation: fadeUp .8s ease both; }
+  .hero-wordmark  { animation-delay: .1s; }
+  .hero-eyebrow   { animation-delay: .2s; }
+  .hero-title     { animation-delay: .3s; }
+  .hero-sub       { animation-delay: .4s; }
+  .hero-services  { animation-delay: .5s; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-right { display: none; }
+    .hero-left { padding: 60px 28px; }
+    .content { padding: 48px 28px 64px; }
+    .alert-wrap { padding: 0 28px; }
+    .glp-alert-wrap { padding: 0 28px; }
+    footer { padding: 40px 28px; }
+    .rule-box { grid-template-columns: 1fr; gap: 20px; padding: 32px 28px; }
+    .disclaimer-box { grid-template-columns: 1fr; gap: 20px; padding: 28px 24px; }
+    .checker-body { padding: 24px; }
+    .btn-row { flex-direction: column; }
+    .btn-primary { flex: none; }
+  }
 </style>
 </head>
 <body>
 
+<!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-left">
     <div class="hero-wordmark">Advanced MedAesthetic Partners</div>
-    <p class="hero-eyebrow">Meta Advertising Guide - Health & Wellness · 2026</p>
-    <h1 class="hero-title">Green-light terms<br><em>&amp; approved phrases</em></h1>
-    <p class="hero-sub">The compliant language your team can use on Facebook &amp; Instagram - organized by service, built for partner practices.</p>
+    <p class="hero-eyebrow">Meta Advertising Guide · Compliance Tools · 2026</p>
+    <h1 class="hero-title">Green-light terms,<br>approved phrases<br><em>&amp; post checker</em></h1>
+    <p class="hero-sub">The compliant language your team can use on Facebook &amp; Instagram — organized by service, built for partner practices. Includes a live compliance checker for peptide content.</p>
     <div class="hero-services">
       <span class="hero-service-pill">Peptides</span>
       <span class="hero-service-pill">GLP-1</span>
       <span class="hero-service-pill">IV Therapy</span>
       <span class="hero-service-pill">Hormone Replacement</span>
-      <span class="hero-service-pill">Internal Use</span>
+      <span class="hero-service-pill">Post Checker</span>
     </div>
   </div>
   <div class="hero-right">
@@ -572,24 +770,26 @@
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-num">18+</div><div class="hero-stat-label">Age gate required</div></div>
-      <div class="hero-stat"><div class="hero-stat-num">6</div><div class="hero-stat-label">Service categories</div></div>
       <div class="hero-stat"><div class="hero-stat-num">46</div><div class="hero-stat-label">Approved phrases</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">12</div><div class="hero-stat-label">Checker rules</div></div>
     </div>
   </div>
 </section>
 
+<!-- ── META ALERT ── -->
 <div class="alert-wrap">
   <div class="alert-inner">
     <div class="alert-icon">
       <svg viewBox="0 0 14 14" fill="none"><path d="M7 2L12.5 12H1.5L7 2Z" stroke="#B9975B" stroke-width="1.2" stroke-linejoin="round"/><path d="M7 5.5V8" stroke="#B9975B" stroke-width="1.3" stroke-linecap="round"/><circle cx="7" cy="10" r=".6" fill="#B9975B"/></svg>
     </div>
     <div>
-      <div class="alert-label">2025 Meta Policy Shift - Read First</div>
+      <div class="alert-label">2025 Meta Policy Shift — Read First</div>
       <p class="alert-body">Meta now classifies health &amp; wellness as a <strong style="color:var(--tan);font-weight:500">sensitive category</strong>. Focus on Lead, Schedule, or Awareness objectives. Age-gate all campaigns to 18+.</p>
     </div>
   </div>
 </div>
 
+<!-- ── GLP-1 ALERT ── -->
 <div class="glp-alert-wrap">
   <div class="glp-alert-inner">
     <div class="glp-alert-icon">
@@ -606,7 +806,7 @@
 
 <main class="content">
 
-  <!-- FILTER BAR -->
+  <!-- ── FILTER BAR ── -->
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
     <button class="filter-btn" data-filter="glp1">GLP-1</button>
@@ -615,10 +815,10 @@
     <button class="filter-btn" data-filter="hrt">HRT</button>
     <button class="filter-btn" data-filter="universal">Universal</button>
     <button class="filter-btn" data-filter="ctas">CTAs</button>
+    <button class="filter-btn" data-filter="checker">Post Checker</button>
   </div>
 
-
-  <!-- 01 GLP-1 -->
+  <!-- ── 01 GLP-1 ── -->
   <div class="section" data-service="glp1">
     <div class="section-header">
       <div class="section-num">01</div>
@@ -767,7 +967,6 @@
 
     </div>
 
-    <!-- GLP-1 Avoid Box -->
     <div class="avoid-box">
       <div class="avoid-box-label">GLP-1 Specific — DO NOT USE</div>
       <div class="avoid-grid">
@@ -775,17 +974,15 @@
         <div class="avoid-pill">Semaglutide injections (implies equivalence to brand drug)</div>
         <div class="avoid-pill">"Same as Ozempic" or "generic Wegovy"</div>
         <div class="avoid-pill">"Lose X lbs" or specific weight loss outcome claims</div>
-        <div class="avoid-pill">Before/after imagery without full FTC disclosures on website. No before and afters on social, as Meta can flag</div>
+        <div class="avoid-pill">Before/after imagery without full FTC disclosures on website. No before/afters on social — Meta can flag</div>
         <div class="avoid-pill">"FDA-approved" for any compounded formulation</div>
         <div class="avoid-pill">Influencer posts showing self-injection of compounded product</div>
         <div class="avoid-pill">"Cures," "treats," or "eliminates" obesity or diabetes</div>
       </div>
     </div>
-
   </div>
 
-
-  <!-- 02 PEPTIDES -->
+  <!-- ── 02 PEPTIDES ── -->
   <div class="section" data-service="peptides">
     <div class="section-header">
       <div class="section-num">02</div>
@@ -805,7 +1002,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Peptide wellness protocols"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Your wellness, your protocol. Our peptide programs are built around you - not a one-size-fits-all approach. Book a consult to learn more.</div>
+              <div class="caption-item">Your wellness, your protocol. Our peptide programs are built around you — not a one-size-fits-all approach. Book a consult to learn more.</div>
               <div class="caption-item">Science-informed. Provider-guided. Built for you. Explore our peptide wellness protocols and invest in how you feel every day.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -823,7 +1020,7 @@
             <div class="flip-back-term">"Support your body's natural recovery"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
               <div class="caption-item">Recovery isn't just rest. Support your body's natural recovery process with provider-guided peptide programs tailored to your goals.</div>
-              <div class="caption-item">Your body already knows how to recover. We're here to support that process. Learn about our peptide wellness offerings - link in bio.</div>
+              <div class="caption-item">Your body already knows how to recover. We're here to support that process. Learn about our peptide wellness offerings — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -857,7 +1054,7 @@
             <div class="flip-back-term">"Optimize your performance"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
               <div class="caption-item">You put in the work. Now optimize your performance from the inside out. Our provider-guided programs are built for people who don't settle.</div>
-              <div class="caption-item">Peak performance isn't just physical - it's how you recover, how you feel, how you show up. Ask us how to optimize yours.</div>
+              <div class="caption-item">Peak performance isn't just physical — it's how you recover, how you feel, how you show up. Ask us how to optimize yours.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -874,7 +1071,7 @@
             <div class="flip-back-term">"Provider-guided peptide programs"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
               <div class="caption-item">Not all wellness programs are created equal. Ours are provider-guided, personalized, and built around your goals. Start with a complimentary consult.</div>
-              <div class="caption-item">Provider-guided peptide programs mean you're never guessing. Every step is supported by our clinical team. Learn more - link in bio.</div>
+              <div class="caption-item">Provider-guided peptide programs mean you're never guessing. Every step is supported by our clinical team. Learn more — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -890,7 +1087,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Longevity &amp; vitality support"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Longevity isn't luck - it's a lifestyle. Our vitality support programs help you feel as good as you look, for years to come.</div>
+              <div class="caption-item">Longevity isn't luck — it's a lifestyle. Our vitality support programs help you feel as good as you look, for years to come.</div>
               <div class="caption-item">Your vitality is worth protecting. Explore our longevity-focused wellness programs and take the first step toward feeling your best every day.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -924,8 +1121,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"Science-backed wellness"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">We believe wellness should be grounded in science - not hype. Our provider-guided programs are built on research and tailored to you.</div>
-              <div class="caption-item">Science-backed wellness isn't a buzzword here. It's the foundation of everything we offer. Learn more about our approach - link in bio.</div>
+              <div class="caption-item">We believe wellness should be grounded in science — not hype. Our provider-guided programs are built on research and tailored to you.</div>
+              <div class="caption-item">Science-backed wellness isn't a buzzword here. It's the foundation of everything we offer. Learn more about our approach — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -935,13 +1132,13 @@
     </div>
   </div>
 
-  <!-- 03 IV THERAPY -->
+  <!-- ── 03 IV THERAPY ── -->
   <div class="section" data-service="iv">
     <div class="section-header">
       <div class="section-num">03</div>
       <div>
         <h2 class="section-title">IV Therapy</h2>
-        <p class="section-sub">Hydration &amp; energy framing - permissible as a wellness service</p>
+        <p class="section-sub">Hydration &amp; energy framing — permissible as a wellness service</p>
       </div>
     </div>
     <div class="term-grid">
@@ -955,8 +1152,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"Hydration drips tailored to you"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Not all hydration is created equal. Our drips are tailored to you - your lifestyle, your goals, your body. Book your session today.</div>
-              <div class="caption-item">Skip the one-size-fits-all approach. Our hydration drips are customized for you. See what's available - link in bio.</div>
+              <div class="caption-item">Not all hydration is created equal. Our drips are tailored to you — your lifestyle, your goals, your body. Book your session today.</div>
+              <div class="caption-item">Skip the one-size-fits-all approach. Our hydration drips are customized for you. See what's available — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -990,7 +1187,7 @@
             <div class="flip-back-term">"Recovery &amp; wellness infusions"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
               <div class="caption-item">Recovery is part of the process. Our wellness infusions help your body keep showing up at its best. Book your session today.</div>
-              <div class="caption-item">Invest in your recovery as much as your performance. Our wellness infusion menu is curated and provider-supervised. See your options - link in bio.</div>
+              <div class="caption-item">Invest in your recovery as much as your performance. Our wellness infusion menu is curated and provider-supervised. See your options — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1000,13 +1197,13 @@
       <div class="flip-card" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
           <div class="flip-front">
-            <div><div class="term-phrase">"Support your natural energy"</div><div class="term-why">Experiential framing - avoids outcome-claim territory</div></div>
+            <div><div class="term-phrase">"Support your natural energy"</div><div class="term-why">Experiential framing — avoids outcome-claim territory</div></div>
             <div class="flip-hint">See captions</div>
           </div>
           <div class="flip-back">
             <div class="flip-back-term">"Support your natural energy"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Your energy is yours - we're just here to support it. Our IV infusions complement your wellness routine with a personalized approach.</div>
+              <div class="caption-item">Your energy is yours — we're just here to support it. Our IV infusions complement your wellness routine with a personalized approach.</div>
               <div class="caption-item">Support your natural energy with a customized IV drip from our clinical team. Because feeling good shouldn't be complicated.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -1023,7 +1220,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Customized vitamin infusions"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Customized vitamin infusions, administered by our clinical team. Built around your goals and your lifestyle - not a generic menu.</div>
+              <div class="caption-item">Customized vitamin infusions, administered by our clinical team. Built around your goals and your lifestyle — not a generic menu.</div>
               <div class="caption-item">Every drip is different because every person is different. Our customized vitamin infusions start with a conversation. Book yours today.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -1085,13 +1282,13 @@
     </div>
   </div>
 
-  <!-- 04 HRT -->
+  <!-- ── 04 HRT ── -->
   <div class="section" data-service="hrt">
     <div class="section-header">
       <div class="section-num">04</div>
       <div>
         <h2 class="section-title">Hormone Replacement Therapy</h2>
-        <p class="section-sub">Balance &amp; quality of life framing - LegitScript certification required for Rx ads</p>
+        <p class="section-sub">Balance &amp; quality of life framing — LegitScript certification required for Rx ads</p>
       </div>
     </div>
     <div class="term-grid">
@@ -1105,8 +1302,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"Hormone optimization"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Hormone optimization isn't about chasing perfection - it's about feeling like yourself. Talk to our providers and see if it's right for you.</div>
-              <div class="caption-item">Your hormones affect everything. When they're optimized, you feel it. Learn about our individualized hormone programs - link in bio.</div>
+              <div class="caption-item">Hormone optimization isn't about chasing perfection — it's about feeling like yourself. Talk to our providers and see if it's right for you.</div>
+              <div class="caption-item">Your hormones affect everything. When they're optimized, you feel it. Learn about our individualized hormone programs — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1139,8 +1336,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"Individualized hormone programs"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">No two hormone programs look the same here - because no two people are the same. Our individualized approach starts with a conversation.</div>
-              <div class="caption-item">Individualized hormone programs for men and women, guided by our clinical team. See if it's right for you - complimentary consults available.</div>
+              <div class="caption-item">No two hormone programs look the same here — because no two people are the same. Our individualized approach starts with a conversation.</div>
+              <div class="caption-item">Individualized hormone programs for men and women, guided by our clinical team. See if it's right for you — complimentary consults available.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1156,8 +1353,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"Feel like the best version of yourself"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">You deserve to feel like the best version of yourself - every single day. Our providers are here to help you get there. Book a consult today.</div>
-              <div class="caption-item">The best version of you is waiting. Our individualized hormone wellness programs are designed to help you show up fully - in every area of your life.</div>
+              <div class="caption-item">You deserve to feel like the best version of yourself — every single day. Our providers are here to help you get there. Book a consult today.</div>
+              <div class="caption-item">The best version of you is waiting. Our individualized hormone wellness programs are designed to help you show up fully — in every area of your life.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1184,14 +1381,14 @@
       <div class="flip-card" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
           <div class="flip-front">
-            <div><div class="term-phrase">"Energy &amp; vitality support"</div><div class="term-why">Removes "mood" - avoids mental health condition targeting flags</div></div>
+            <div><div class="term-phrase">"Energy &amp; vitality support"</div><div class="term-why">Removes "mood" — avoids mental health condition targeting flags</div></div>
             <div class="flip-hint">See captions</div>
           </div>
           <div class="flip-back">
             <div class="flip-back-term">"Energy &amp; vitality support"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Your energy and vitality matter. Our hormone wellness programs are designed to support both - through a personalized, provider-guided approach.</div>
-              <div class="caption-item">Feel energized. Feel vital. Feel like you. Our hormone wellness programs are here to support your journey - book a complimentary consult.</div>
+              <div class="caption-item">Your energy and vitality matter. Our hormone wellness programs are designed to support both — through a personalized, provider-guided approach.</div>
+              <div class="caption-item">Feel energized. Feel vital. Feel like you. Our hormone wellness programs are here to support your journey — book a complimentary consult.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1207,7 +1404,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Tailored plans for men &amp; women"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Hormone wellness isn't one-size-fits-all - and it's not just for one gender. We offer tailored plans for men and women at every stage of life.</div>
+              <div class="caption-item">Hormone wellness isn't one-size-fits-all — and it's not just for one gender. We offer tailored plans for men and women at every stage of life.</div>
               <div class="caption-item">Tailored hormone wellness plans for men and women, guided by our clinical team. Start with a complimentary consultation today.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -1218,14 +1415,14 @@
       <div class="flip-card" onclick="this.classList.toggle('flipped')">
         <div class="flip-card-inner">
           <div class="flip-front">
-            <div><div class="term-phrase">"Talk to our hormone specialists"</div><div class="term-why">Consultation CTA - safe lower-funnel move</div></div>
+            <div><div class="term-phrase">"Talk to our hormone specialists"</div><div class="term-why">Consultation CTA — safe lower-funnel move</div></div>
             <div class="flip-hint">See captions</div>
           </div>
           <div class="flip-back">
             <div class="flip-back-term">"Talk to our hormone specialists"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Curious about hormone wellness? Talk to our hormone specialists - no pressure, no commitment. Just a real conversation about your options.</div>
-              <div class="caption-item">Questions about hormone wellness? We have answers. Talk to our specialists today - complimentary consultations available now.</div>
+              <div class="caption-item">Curious about hormone wellness? Talk to our hormone specialists — no pressure, no commitment. Just a real conversation about your options.</div>
+              <div class="caption-item">Questions about hormone wellness? We have answers. Talk to our specialists today — complimentary consultations available now.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1235,13 +1432,13 @@
     </div>
   </div>
 
-  <!-- 05 UNIVERSAL -->
+  <!-- ── 05 UNIVERSAL ── -->
   <div class="section" data-service="universal">
     <div class="section-header">
       <div class="section-num">05</div>
       <div>
         <h2 class="section-title">Universal Terms</h2>
-        <p class="section-sub">Safe across all services - use freely</p>
+        <p class="section-sub">Safe across all services — use freely</p>
       </div>
     </div>
     <div class="universal-grid">
@@ -1253,7 +1450,7 @@
             <div class="flip-back-term">"Wellness optimization"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
               <div class="caption-item">Wellness optimization looks different for everyone. That's exactly the point. Let's build a plan that works for your life.</div>
-              <div class="caption-item">From peptides to IV therapy to hormone wellness - we offer a full suite of wellness optimization services. Book a consult to explore your options.</div>
+              <div class="caption-item">From peptides to IV therapy to hormone wellness — we offer a full suite of wellness optimization services. Book a consult to explore your options.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1280,7 +1477,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Personalized care plans"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Cookie-cutter wellness doesn't exist here. Our personalized care plans are built around you - your goals, your lifestyle, your body.</div>
+              <div class="caption-item">Cookie-cutter wellness doesn't exist here. Our personalized care plans are built around you — your goals, your lifestyle, your body.</div>
               <div class="caption-item">A personalized care plan changes everything. Talk to our team and see what a truly customized approach to wellness can do for you.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -1294,7 +1491,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Provider-supervised programs"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Every program we offer is provider-supervised. That means you're never on your own - our clinical team is with you every step of the way.</div>
+              <div class="caption-item">Every program we offer is provider-supervised. That means you're never on your own — our clinical team is with you every step of the way.</div>
               <div class="caption-item">Wellness you can trust. All of our programs are provider-supervised, personalized, and built around your goals. Book a consult to learn more.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -1308,8 +1505,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"Feel your best every day"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Feeling your best every day isn't a luxury - it's a goal worth having. Our wellness team is here to help you get there and stay there.</div>
-              <div class="caption-item">What would it feel like to feel your best every day? Let's find out together. Book a complimentary wellness consultation - link in bio.</div>
+              <div class="caption-item">Feeling your best every day isn't a luxury — it's a goal worth having. Our wellness team is here to help you get there and stay there.</div>
+              <div class="caption-item">What would it feel like to feel your best every day? Let's find out together. Book a complimentary wellness consultation — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1322,7 +1519,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Science-informed wellness"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">We don't do trends. We do science-informed wellness - grounded in research, guided by providers, personalized for you. Learn more - link in bio.</div>
+              <div class="caption-item">We don't do trends. We do science-informed wellness — grounded in research, guided by providers, personalized for you. Learn more — link in bio.</div>
               <div class="caption-item">The difference is in the approach. Our science-informed programs are built on research and delivered by a clinical team that knows you.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -1336,7 +1533,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Your journey to vitality"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Your journey to vitality starts with a single step. We're here to walk it with you - from your first consultation to your best self.</div>
+              <div class="caption-item">Your journey to vitality starts with a single step. We're here to walk it with you — from your first consultation to your best self.</div>
               <div class="caption-item">Ready to begin your journey to vitality? Our providers are here to guide you every step of the way. Complimentary consultations available now.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -1350,8 +1547,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"Complimentary consultation"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">The hardest part is starting. Make it easy - book a complimentary consultation with our team and let's talk about your wellness goals.</div>
-              <div class="caption-item">No commitment. No pressure. Just a complimentary consultation with a provider who's here to listen. Book yours today - link in bio.</div>
+              <div class="caption-item">The hardest part is starting. Make it easy — book a complimentary consultation with our team and let's talk about your wellness goals.</div>
+              <div class="caption-item">No commitment. No pressure. Just a complimentary consultation with a provider who's here to listen. Book yours today — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1361,13 +1558,13 @@
     </div>
   </div>
 
-  <!-- 06 APPROVED CTAs -->
+  <!-- ── 06 CTAs ── -->
   <div class="section" data-service="ctas">
     <div class="section-header">
       <div class="section-num">06</div>
       <div>
         <h2 class="section-title">Approved CTAs</h2>
-        <p class="section-sub">Compliant lower-funnel calls to action - lead-gen safe</p>
+        <p class="section-sub">Compliant lower-funnel calls to action — lead-gen safe</p>
       </div>
     </div>
     <div class="cta-grid">
@@ -1392,8 +1589,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"Learn more about your options"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Not sure where to start? Learn more about your options - our providers are here to walk you through everything we offer, no pressure.</div>
-              <div class="caption-item">Peptides. IV therapy. Hormone wellness. Weight management. There's a lot to explore. Learn more about your options and find what fits - link in bio.</div>
+              <div class="caption-item">Not sure where to start? Learn more about your options — our providers are here to walk you through everything we offer, no pressure.</div>
+              <div class="caption-item">Peptides. IV therapy. Hormone wellness. Weight management. There's a lot to explore. Learn more about your options — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1420,7 +1617,7 @@
           <div class="flip-back">
             <div class="flip-back-term">"Start your wellness journey"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Every great wellness journey starts somewhere. Let ours start together - book a complimentary consultation and see what's possible.</div>
+              <div class="caption-item">Every great wellness journey starts somewhere. Let ours start together — book a complimentary consultation and see what's possible.</div>
               <div class="caption-item">You've been thinking about it. Now's the time. Start your wellness journey today with a team that's genuinely invested in your results.</div>
             </div>
             <div class="flip-back-close">Back</div>
@@ -1434,8 +1631,8 @@
           <div class="flip-back">
             <div class="flip-back-term">"See if this is right for you"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
-              <div class="caption-item">Not sure if this is for you? That's exactly why we offer complimentary consultations. Come in and see if it's the right fit - no commitment required.</div>
-              <div class="caption-item">Curious but not committed? That's okay. See if this is right for you - our team will walk you through everything and let you decide.</div>
+              <div class="caption-item">Not sure if this is for you? That's exactly why we offer complimentary consultations. Come in and see if it's the right fit — no commitment required.</div>
+              <div class="caption-item">Curious but not committed? That's okay. See if this is right for you — our team will walk you through everything and let you decide.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1449,7 +1646,7 @@
             <div class="flip-back-term">"Request your personalized plan"</div><div class="flip-back-sublabel">Caption ideas</div>
             <div class="caption-list">
               <div class="caption-item">Your wellness plan should be as unique as you are. Request your personalized plan today and let our clinical team build something around your goals.</div>
-              <div class="caption-item">Stop guessing. Start with a plan. Request your personalized wellness plan and take the first step toward feeling your best - link in bio.</div>
+              <div class="caption-item">Stop guessing. Start with a plan. Request your personalized wellness plan and take the first step toward feeling your best — link in bio.</div>
             </div>
             <div class="flip-back-close">Back</div>
           </div>
@@ -1459,7 +1656,98 @@
     </div>
   </div>
 
-  <!-- RULE OF THUMB -->
+  <!-- ── 07 PEPTIDE POST CHECKER ── -->
+  <div class="section" data-service="checker">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div>
+        <h2 class="section-title">Peptide Post Checker</h2>
+        <p class="section-sub">Paste any caption, graphic copy, or patient handout before publishing</p>
+      </div>
+    </div>
+
+    <div class="checker-wrap">
+      <div class="checker-header">
+        <div class="checker-header-icon">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke="#B9975B" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <div class="checker-header-label">Live Compliance Review</div>
+          <div class="checker-header-title">Peptide Post Checker</div>
+        </div>
+      </div>
+      <div class="checker-body">
+        <label class="input-label" for="post-input">Your post or caption text</label>
+        <textarea id="post-input" placeholder="Paste your post, caption, graphic copy, or patient handout text here..."></textarea>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="checkCompliance()">Run compliance check</button>
+          <button class="btn-secondary" onclick="clearAll()">Clear</button>
+        </div>
+
+        <div class="score-wrap" id="score-wrap">
+          <div class="score-row">
+            <div>
+              <div class="score-label-text">Compliance score</div>
+              <div class="score-number" id="score-number"></div>
+              <div class="score-verdict" id="score-verdict"></div>
+            </div>
+          </div>
+          <div class="score-track">
+            <div class="score-fill" id="score-fill"></div>
+          </div>
+
+          <div id="flags-section"></div>
+          <div id="missing-section"></div>
+          <div id="pass-section"></div>
+
+          <p style="font-size: 11px; color: var(--mauve); margin-top: 24px; line-height: 1.7; border-top: 1px solid var(--blush); padding-top: 20px;">
+            This tool checks against AMP peptide compliance guidelines including FDA compounding rules, FTC health claim standards, and Meta advertising policy. It does not constitute legal advice. Consult your compounding pharmacy's legal team before publishing high-exposure content.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK RULES -->
+    <div style="margin-top: 40px;">
+      <div style="font-size: 9px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">Key rules at a glance <span style="flex:1; height:1px; background: rgba(185,151,91,.25); display:block;"></span></div>
+      <div class="ref-grid">
+        <div class="ref-card">
+          <div class="ref-card-label">Critical</div>
+          <div class="ref-card-title">No absolute treatment claims</div>
+          <div class="ref-card-body">Replace "reduces inflammation" or "heals tissue" with qualifying language: "may support," "some patients experience," or "may help."</div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-card-label">Required</div>
+          <div class="ref-card-title">FDA disclaimer on all content</div>
+          <div class="ref-card-body">"These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease." Required in caption or post body.</div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-card-label">Required</div>
+          <div class="ref-card-title">Prescriber disclaimer</div>
+          <div class="ref-card-body">"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review." Must appear somewhere in the content.</div>
+        </div>
+        <div class="ref-card">
+          <div class="ref-card-label">High Priority</div>
+          <div class="ref-card-title">No disease or condition claims</div>
+          <div class="ref-card-body">Do not describe any peptide as treating a disease or condition. "Gut repair," "chronic irritation," and "inflammatory disease" are flags. Use wellness framing.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- REQUIRED DISCLAIMER -->
+    <div class="disclaimer-box">
+      <div class="disclaimer-icon">
+        <svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="#B9975B" stroke-width="1.2"/><path d="M11 7v5" stroke="#B9975B" stroke-width="1.4" stroke-linecap="round"/><circle cx="11" cy="15" r=".8" fill="#B9975B"/></svg>
+      </div>
+      <div>
+        <div class="disclaimer-label">Required disclaimer — copy &amp; use on every peptide post</div>
+        <p class="disclaimer-text">"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review. Individual results vary. These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RULE OF THUMB ── -->
   <div class="rule-box">
     <div class="rule-icon-wrap">
       <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1470,7 +1758,7 @@
     </div>
     <div>
       <div class="rule-label">Rule of Thumb</div>
-      <p class="rule-text">If a term describes how someone will <em>feel</em> or what they <em>experience</em> - it's safe. If it describes what a treatment will <em>fix</em>, <em>cure</em>, or <em>diagnose</em> - it's a flag. Swap any medical verb for a wellness verb: <em>support, optimize, enhance, restore.</em> For GLP-1 specifically: <em>always market the program, never the drug name.</em></p>
+      <p class="rule-text">If a term describes how someone will <em>feel</em> or what they <em>experience</em> — it's safe. If it describes what a treatment will <em>fix</em>, <em>cure</em>, or <em>diagnose</em> — it's a flag. Swap any medical verb for a wellness verb: <em>support, optimize, enhance, restore.</em> For GLP-1 specifically: <em>always market the program, never the drug name.</em></p>
     </div>
   </div>
 
@@ -1486,18 +1774,16 @@
   </div>
 </footer>
 
-
 <script>
+  /* ── FILTER BAR ── */
   const filterBtns = document.querySelectorAll('.filter-btn');
   const sections = document.querySelectorAll('.section[data-service]');
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const filter = btn.dataset.filter;
-
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       sections.forEach(section => {
         if (filter === 'all' || section.dataset.service === filter) {
           section.classList.remove('hidden');
@@ -1508,7 +1794,248 @@
       });
     });
   });
-</script>
 
+  /* ── COMPLIANCE CHECKER ── */
+  const rules = [
+    {
+      id: "bpc157",
+      type: "flag",
+      severity: "critical",
+      label: "BPC-157 referenced by name",
+      detail: "Remove all references to BPC-157. List PDA as \"PDA (Pentadeca Arginate)\" only. Publicly equating PDA with BPC-157 carries significant regulatory and platform risk.",
+      test: t => /bpc[\s\-]?157/i.test(t)
+    },
+    {
+      id: "tb500_claims",
+      type: "flag",
+      severity: "critical",
+      label: "TB-500 named with treatment-level claims",
+      detail: "TB-500 is FDA Category 2. If referenced publicly with outcome language, every claim must use qualifying language and the full FDA disclaimer must accompany the post.",
+      test: t => /tb[\s\-]?500/i.test(t) && /(accelerat|heals?|treat|cure|repair|reduce|eliminat|used to)/i.test(t)
+    },
+    {
+      id: "absolute_claims",
+      type: "flag",
+      severity: "high",
+      label: "Absolute benefit claims detected",
+      detail: "Replace flat claims (\"reduces inflammation,\" \"heals tissue,\" \"accelerates healing\") with qualifying language: \"may support,\" \"some patients experience,\" or \"may help.\"",
+      test: t => [
+        /reduces? inflammation/i,
+        /heals? (tissue|muscle|tendon|injury|wound)/i,
+        /eliminates? (pain|inflammation)/i,
+        /\baccelerates? healing\b/i,
+        /\bcures?\b/i,
+        /\btreats?\b/i,
+        /\bprevents?\b/i,
+        /proven to\b/i,
+        /clinically proven/i,
+        /is used to (heal|treat|cure|repair)/i,
+        /will (improve|reduce|increase|boost|enhance)/i
+      ].some(p => p.test(t))
+    },
+    {
+      id: "disease_claims",
+      type: "flag",
+      severity: "high",
+      label: "Disease or condition treatment claim",
+      detail: "Do not describe any peptide as treating a specific disease or condition. Use wellness and support language only.",
+      test: t => /(inflammatory disease|autoimmune|arthritis|GERD|IBS|ulcer|cancer|depression|anxiety|PTSD|diabetes|chronic illness)/i.test(t)
+    },
+    {
+      id: "gut_repair",
+      type: "flag",
+      severity: "medium",
+      label: "\"Gut repair\" language",
+      detail: "\"Gut repair\" is a medical claim. Replace with \"digestive wellness support\" or \"gut comfort.\"",
+      test: t => /gut repair/i.test(t)
+    },
+    {
+      id: "chronic_irritation",
+      type: "flag",
+      severity: "medium",
+      label: "\"Chronic irritation\" language",
+      detail: "\"Chronic irritation\" edges into condition claim territory. Replace with \"digestive wellness\" or \"ongoing comfort support.\"",
+      test: t => /chronic irritation/i.test(t)
+    },
+    {
+      id: "combat_language",
+      type: "flag",
+      severity: "medium",
+      label: "Assertive \"combat\" language",
+      detail: "\"Combat age-related HGH decline\" or similar phrasing is assertive. Soften to \"may help address\" or \"discussed for its potential role in supporting.\"",
+      test: t => /combat (age|hgh|decline|fatigue|disease)/i.test(t)
+    },
+    {
+      id: "fda_disclaimer",
+      type: "missing",
+      severity: "required",
+      label: "FDA disclaimer missing",
+      detail: "All peptide content must include: \"These statements have not been evaluated by the FDA and are not intended to diagnose, treat, cure, or prevent any disease.\"",
+      test: t => !/(not.*evaluated.*FDA|not intended to diagnose)/i.test(t)
+    },
+    {
+      id: "prescriber_disclaimer",
+      type: "missing",
+      severity: "required",
+      label: "Prescriber disclaimer missing",
+      detail: "Add: \"All peptide therapies are prescribed by a licensed medical provider following consultation and lab review.\"",
+      test: t => !/(prescribed by a licensed|licensed medical provider|requires? a prescription|under medical supervision)/i.test(t)
+    },
+    {
+      id: "results_vary",
+      type: "missing",
+      severity: "recommended",
+      label: "\"Individual results vary\" not included",
+      detail: "Add \"Individual results vary\" to the post or caption.",
+      test: t => !/(individual results vary|results (may|will) vary|results vary)/i.test(t)
+    },
+    {
+      id: "qualifying_language",
+      type: "pass",
+      label: "Qualifying language present",
+      detail: "Post uses \"may,\" \"may support,\" or similar qualifying language throughout.",
+      test: t => /(may (support|help|improve|aid|assist|reduce|increase|promote)|some patients|results vary|discussed for|may include)/i.test(t)
+    },
+    {
+      id: "consult_cta",
+      type: "pass",
+      label: "Consultation-first call to action",
+      detail: "Post directs patients to consult before starting therapy.",
+      test: t => /(consult|consultation|schedule|speak with|talk to|book)/i.test(t)
+    },
+    {
+      id: "pda_correct",
+      type: "pass",
+      label: "PDA listed correctly without BPC-157 association",
+      detail: "PDA referenced as Pentadeca Arginate and not linked to BPC-157.",
+      test: t => /pentadeca arginate/i.test(t) && !/bpc[\s\-]?157/i.test(t)
+    }
+  ];
+
+  function checkCompliance() {
+    const text = document.getElementById("post-input").value.trim();
+    if (!text) return;
+
+    const flags = [];
+    const missing = [];
+    const passes = [];
+
+    rules.forEach(rule => {
+      if (rule.type === "flag" && rule.test(text)) flags.push(rule);
+      else if (rule.type === "missing" && rule.test(text)) missing.push(rule);
+      else if (rule.type === "pass" && rule.test(text)) passes.push(rule);
+    });
+
+    const criticalCount = flags.filter(f => f.severity === "critical").length;
+    const highCount = flags.filter(f => f.severity === "high").length;
+    const mediumCount = flags.filter(f => f.severity === "medium").length;
+    const requiredMissing = missing.filter(m => m.severity === "required").length;
+
+    let score = 100;
+    score -= criticalCount * 30;
+    score -= highCount * 18;
+    score -= mediumCount * 10;
+    score -= requiredMissing * 14;
+    score = Math.max(0, Math.min(100, score));
+
+    const scoreEl = document.getElementById("score-number");
+    const verdictEl = document.getElementById("score-verdict");
+    const fillEl = document.getElementById("score-fill");
+
+    scoreEl.textContent = score + "/100";
+
+    if (score >= 85) {
+      scoreEl.style.color = "#1a5c35";
+      fillEl.style.background = "#2a7a4a";
+      verdictEl.textContent = "Ready to publish";
+      verdictEl.style.color = "#1a5c35";
+    } else if (score >= 60) {
+      scoreEl.style.color = "#6b4a0e";
+      fillEl.style.background = "#c08a20";
+      verdictEl.textContent = "Needs revision before publishing";
+      verdictEl.style.color = "#6b4a0e";
+    } else {
+      scoreEl.style.color = "#7a2e1e";
+      fillEl.style.background = "#b84a30";
+      verdictEl.textContent = "Do not publish — significant issues found";
+      verdictEl.style.color = "#7a2e1e";
+    }
+
+    fillEl.style.width = score + "%";
+
+    renderFlags(flags);
+    renderMissing(missing);
+    renderPasses(passes);
+
+    document.getElementById("score-wrap").style.display = "block";
+    document.getElementById("score-wrap").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function renderFlags(flags) {
+    const el = document.getElementById("flags-section");
+    if (!flags.length) { el.innerHTML = ""; return; }
+
+    const badgeMap = { critical: "badge-critical", high: "badge-high", medium: "badge-medium" };
+    const labelMap = { critical: "Critical", high: "High priority", medium: "Review" };
+
+    let html = `<div class="result-section"><div class="result-section-label">Fix before posting</div>`;
+    flags.forEach(item => {
+      html += `<div class="result-item ${item.severity}">
+        <div class="result-item-top">
+          <span class="result-badge ${badgeMap[item.severity]}">${labelMap[item.severity]}</span>
+          <span class="result-item-title">${item.label}</span>
+        </div>
+        <div class="result-item-detail">${item.detail}</div>
+      </div>`;
+    });
+    html += `</div>`;
+    el.innerHTML = html;
+  }
+
+  function renderMissing(missing) {
+    const el = document.getElementById("missing-section");
+    if (!missing.length) { el.innerHTML = ""; return; }
+
+    const classMap = { required: "missing-required", recommended: "missing-recommended" };
+    const badgeMap = { required: "badge-required", recommended: "badge-recommended" };
+    const labelMap = { required: "Required", recommended: "Recommended" };
+
+    let html = `<div class="result-section"><div class="result-section-label">Required additions</div>`;
+    missing.forEach(item => {
+      html += `<div class="result-item ${classMap[item.severity]}">
+        <div class="result-item-top">
+          <span class="result-badge ${badgeMap[item.severity]}">${labelMap[item.severity]}</span>
+          <span class="result-item-title">${item.label}</span>
+        </div>
+        <div class="result-item-detail">${item.detail}</div>
+      </div>`;
+    });
+    html += `</div>`;
+    el.innerHTML = html;
+  }
+
+  function renderPasses(passes) {
+    const el = document.getElementById("pass-section");
+    if (!passes.length) { el.innerHTML = ""; return; }
+
+    let html = `<div class="result-section"><div class="result-section-label">Checks passed</div>`;
+    passes.forEach(item => {
+      html += `<div class="result-item pass">
+        <div class="result-item-top">
+          <span class="result-badge badge-pass">Pass</span>
+          <span class="result-item-title">${item.label}</span>
+        </div>
+        <div class="result-item-detail">${item.detail}</div>
+      </div>`;
+    });
+    html += `</div>`;
+    el.innerHTML = html;
+  }
+
+  function clearAll() {
+    document.getElementById("post-input").value = "";
+    document.getElementById("score-wrap").style.display = "none";
+  }
+</script>
 </body>
 </html>
